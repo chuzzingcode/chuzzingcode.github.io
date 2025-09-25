@@ -3,20 +3,26 @@ project:
   output-dir: docs
 
 website:
-  title: "chuzzingcode.github.io"
+  title: "Christopher Hussey"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - href: tidydata1.qmd
+        text: VIS 1
+      - href: tidydata2.qmd
+        text: VIS 2
 
 format:
   html:
     theme:
-      - cosmo
+      - darkly
       - brand
     css: styles.css
     toc: true
+    page-layout: full
 
 editor: visual
 

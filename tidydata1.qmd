@@ -1,4 +1,122 @@
 ---
-title: "My First Tidy Visualization"
+title: "Lack of Complete Indoor Plumbing: 2023 vs 2022"
 author: "Chris Hussey"
+format:
+  html:
+    code-fold: true
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
+
+```{r}
+# Clean data compiled from code referenced in article (https://waterdata.usgs.gov/blog/acs-maps/). 
+# Code was revised to pull data for all US counties for years 2022 - 2023.
+
+# Load packages -----
+library(tidycensus)
+library(sf) 
+library(janitor) 
+library(tidyverse)
+
+
+
+# Helper functions -----
+get_census_data <- function(geography, var_names, year, proj, survey_var) {
+  df <- get_acs(
+    geography = geography,
+    variable = var_names,
+    year = year,
+    geometry = FALSE,
+    survey = survey_var) |>
+    clean_names() |>
+    mutate(year = year)
+  
+  return(df) 
+}
+
+# Grab relevant variables - B01003_001: total population, B25049_004: households lacking plumbing----
+vars <- c("B01003_001", "B25049_004")
+
+# Pull data for 2023 and 2022 for all US counties ------
+water_insecurity_2023 <- get_census_data(
+  geography = 'county', 
+  var_names = vars, 
+  year = "2023", 
+  proj = "EPSG:5070", 
+  survey_var = "acs1"
+) |>
+  mutate(
+    variable_long = case_when(
+      variable == "B01003_001" ~ "total_pop",
+      variable == "B25049_004" ~ "plumbing",
+      .default = NA_character_  
+    )
+  ) |> 
+  select(geoid, name, variable_long, estimate, year) |> 
+  pivot_wider(
+    names_from = variable_long,
+    values_from = estimate
+  ) |> 
+  mutate(
+    percent_lacking_plumbing = (plumbing / total_pop) * 100
+  )
+
+water_insecurity_2022 <- get_census_data(
+  geography = 'county', 
+  var_names = vars, 
+  year = "2022", 
+  proj = "EPSG:5070", 
+  survey_var = "acs1"
+) |>
+  mutate(
+    variable_long = case_when(
+      variable == "B01003_001" ~ "total_pop",
+      variable == "B25049_004" ~ "plumbing",
+      .default = NA_character_  
+    )
+  ) |> 
+  select(geoid, name, variable_long, estimate, year) |> 
+  pivot_wider(
+    names_from = variable_long,
+    values_from = estimate
+  ) |> 
+  mutate(
+    percent_lacking_plumbing = (plumbing / total_pop) * 100
+  )
+```
+
+```{r}
+
+wi23 <- water_insecurity_2023 |> 
+  as.data.frame() |> 
+  select(geoid, name, percent_lacking_plumbing) |> 
+  rename(p23 = percent_lacking_plumbing)
+
+wi22 <- water_insecurity_2022 |> 
+  as.data.frame() |> 
+  select(geoid, name, percent_lacking_plumbing) |> 
+  rename(p22 = percent_lacking_plumbing)
+
+comp <- inner_join(wi23, wi22, by = c("geoid", "name"))
+
+
+```
+
+```{r}
+ggplot(comp, aes(x = p22, y = p23)) +
+  geom_smooth(method = "lm", se = FALSE, color = "darkred") +
+  geom_point(alpha = 0.6, size = 1.2) +
+  coord_equal() +
+  scale_x_continuous(labels = scales::label_percent(accuracy = 0.01)) +
+  scale_y_continuous(labels = scales::label_percent(accuracy = 0.01)) +
+  labs(
+    title = "Households Lacking Complete Indoor Plumbing",
+    subtitle = "County-level comparison (2023 vs 2022)",
+    x = "2022 % lacking",
+    y = "2023 % lacking",
+    caption = "Source: U.S. Census Bureau, American Community Survey 1-year via tidycensus"
+  ) +
+  theme_minimal(base_size = 12)
+```

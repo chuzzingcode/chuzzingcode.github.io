@@ -1,0 +1,4 @@
+---
+title: "My Second Tidy Visualization"
+author: "Chris Hussey"
+---
