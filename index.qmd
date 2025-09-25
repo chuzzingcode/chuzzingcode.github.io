@@ -1,5 +1,6 @@
 ---
 title: "Christopher Hussey"
+image: media/headshot small.JPEG
 toc: false
 about:
  template: solana
