@@ -7,18 +7,11 @@ about:
  image-width: 17em
  links:
    - text: LinkedIn
-     href: https://www.linkedin.com/in/christopher
--hussey-b81b62152/
+     href: https://www.linkedin.com/in/christopher-hussey-b81b62152/
    - text: GitHub
      href: https://github.com/chuzzingcode
    - text: Email
      href: mailto::cthussey22@gmail.com
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```
+Hi! My name's Christopher (though, I usually go by Chris), and welcome to my website! I'm a Politics, Philosophy, and Economics major at Pomona College, with a burgeoning interest in Data Science and all the visualizations that come with it. Some of my academic areas of interest are security, international relations, Post Structuralist philosophy, and surveillance! Outside of class, you can catch me skating, planning events, and stressing about class!
