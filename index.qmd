@@ -1,5 +1,18 @@
 ---
-title: "chuzzingcode.github.io"
+title: "Christopher Hussey"
+toc: false
+about:
+ template: solana
+ image-shape: rounded
+ image-width: 17em
+ links:
+   - text: LinkedIn
+     href: https://www.linkedin.com/in/christopher
+-hussey-b81b62152/
+   - text: GitHub
+     href: https://github.com/chuzzingcode
+   - text: Email
+     href: mailto::cthussey22@gmail.com
 ---
 
 This is a Quarto website.
