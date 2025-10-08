@@ -14,6 +14,9 @@ website:
         text: VIS 1
       - href: tidydata2.qmd
         text: VIS 2
+      - href: Project_2.qmd
+        text: Project 2
+       
 
 format:
   html:

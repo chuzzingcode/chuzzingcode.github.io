@@ -10,6 +10,8 @@ execute:
   message: false
 ---
 
+## This data set came from the U.S. Census Bureau’s American Community Survey (ACS) for 2022 and 2023. It tracks county-level population and the share of households without complete plumbing, letting us see how access to basic facilities has changed over time.
+
 ```{r}
 # Clean data compiled from code referenced in article (https://waterdata.usgs.gov/blog/acs-maps/). 
 # Code was revised to pull data for all US counties for years 2022 - 2023.
@@ -112,7 +114,7 @@ ggplot(comp, aes(x = p22, y = p23)) +
   scale_x_continuous(labels = scales::label_percent(accuracy = 0.01)) +
   scale_y_continuous(labels = scales::label_percent(accuracy = 0.01)) +
   labs(
-    title = "Households Lacking Complete Indoor Plumbing",
+    title = "Western US Households Lacking Complete Indoor Plumbing",
     subtitle = "County-level comparison (2023 vs 2022)",
     x = "2022 % lacking",
     y = "2023 % lacking",
@@ -120,3 +122,9 @@ ggplot(comp, aes(x = p22, y = p23)) +
   ) +
   theme_minimal(base_size = 12)
 ```
+
+In this visualization, each point represents an overlapping county included in both 2022 and 2023 versions of American Community Survey with a ≥65k population. If plumbing access remained the same all points would fall along the diagonal trend line. The scatter shows that while many counties cluster close to that line, some saw higher shares of households lacking complete plumbing in 2023 (points above the line), and others saw improvements (points below).
+
+[Tidy Tuesday Data](https://github.com/rfordatascience/tidytuesday/tree/main/data/2025/2025-01-28)
+
+Census Data: U.S. Census Bureau. *American Community Survey (ACS) 1-year estimates, Tables B01003 & B25049 (2022–2023).*
