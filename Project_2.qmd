@@ -10,8 +10,6 @@ execute:
   message: false
 ---
 
-ç
-
 ```{r}
 
 
