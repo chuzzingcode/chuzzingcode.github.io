@@ -1,21 +1,117 @@
 ---
-title: "text analysis"
+title: "Patterns in Netflix Shows"
 author: "Chris Hussey"
 format:
   html:
-    code-fold: true
+    code-fold: true        
+    code-summary: "Show code"  
 execute:
-  echo: false
+  echo: true               
   warning: false
   message: false
 ---
 
+This page looks at the TidyTuesday Netflix Titles dataset from 2021-04-20, which includes metadata and short descriptions for movies and TV shows. In my plots, I compare movie runtimes by decade and title lengths across shows in the data set.
+
+##### 
+
 ```{r}
 
 
-tuesdata <- tidytuesdayR::tt_load('2021-04-20')
-tuesdata <- tidytuesdayR::tt_load(2021, week = 17)
+library(tidyverse)
+library(stringr)
 
-netflix <- tuesdata$netflix
+
+
+netflix <- readr::read_csv(
+  "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv",
+)
+
+clean_data <- netflix |>
+  select(type, title, date_added, release_year, duration, description) |>
+  mutate(
+    title       = str_squish(title),
+    description = str_squish(description),
+    decade      = (release_year %/% 10) * 10
+  )
+
+parsed_data <- clean_data |>
+  mutate(
+    minutes = as.integer(str_extract(duration, "(?<=^)\\d+(?=\\s*min$)")),
+    seasons = as.integer(str_extract(duration, "(?<=^)\\d+(?=\\s*Season(?:s)?$)"))
+  )
 
 ```
+
+```{r}
+
+
+parsed_data |>
+  filter(type == "Movie", !is.na(minutes), !is.na(decade)) |>
+  mutate(decade = as.character(decade)) |>
+  ggplot(aes(x = minutes, fill = decade)) +
+  geom_density(alpha = 0.25) +
+  labs(
+    title = "Movie runtime distributions by decade",
+    x = "Runtime (minutes)",
+    y = "Density",
+    fill = "Decade"
+  )
+
+```
+
+Each curve on this plot shows the distribution of Netflix movie runtimes for each decade represented since the 40s. The higher peaks show the most common lengths for that decade. What we see in this plot are the changes across time for what a typical runtime looks like in each era, with the peaks showing what the most frequent lengths were for a given decade.
+
+```{r}
+
+
+
+parsed_data |>
+  transmute(
+    title_words = title |>
+      str_squish() |>
+      str_count("\\S+")         
+  ) |>
+  filter(!is.na(title_words)) |>
+  ggplot(aes(x = title_words)) +
+  geom_histogram(binwidth = 1, center = 0.5) +
+  labs(
+    title = "How long are Netflix titles?",
+    subtitle = "Histogram of the number of words per title",
+    x = "Words in title",
+    y = "Number of titles"
+  )
+```
+
+Each bar on this plot shows how many Netflix titles have a given number of words in their names. Taller bars mark the most common title lengths. What we see is that short, punchy names (around 1–3 words) are most frequent, with a tapering tail of longer titles that tend to appear less often.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+
+parsed_data |>
+  filter(type == "TV Show", !is.na(seasons), seasons <= 11) |>
+  count(seasons, sort = FALSE) |>
+  mutate(seasons = factor(seasons, levels = sort(unique(seasons)))) |>
+  ggplot(aes(x = seasons, y = n)) +
+  geom_col() +
+  labs(
+    title = "How many seasons do Netflix TV shows have?",
+    subtitle = "Counts of TV shows by stated season count (shows with >11 seasons excluded)",
+    x = "Seasons",
+    y = "Number of TV shows"
+  )
+```
+
+Each bar shows how many Netflix TV shows report a given number of seasons, 1 - 11. The tallest bars at the low season counts show that most Netflix series in the catalog are shorter/only have 1 season. This plot excluded series with more than 11 seasons for readability.
+
+References:
+
+-   **TidyTuesday – Netflix Titles (2021-04-20)**\
+    rfordatascience/tidytuesday (CSV + README).\
+    <https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-04-20>
+
+-   **Original Dataset – Netflix Movies and TV Shows (Kaggle)**\
+    Community-compiled catalog commonly cited as the underlying source.\
+    <https://www.kaggle.com/datasets/shivamb/netflix-shows>
