@@ -16,6 +16,9 @@ website:
         text: VIS 2
       - href: Project_2.qmd
         text: Project 2
+      - href: Project_3.qmd
+        text: Project 3
+      
        
 
 format:

@@ -1,0 +1,56 @@
+---
+title: "Project_3"
+format:
+  html:
+    code-fold: true        
+    code-summary: "Show code"  
+execute:
+  echo: true               
+  warning: false
+  message: false
+---
+
+-   The quesiton I'm exploring in this project is this: are asylum **recognition rates** for a chosen origin group meaningfully different between two blocs of countries! I'm looking into this because recognition rates shape real outcomes for applicants and reflect policy differences. A systematic gap could imply procedural, resource, or contextual disparities.
+
+-   **Null (H0):** given the cases we observe (origin + year fixed), **bloc labels are exchangeable**; any difference in average recognition rate between Bloc A and Bloc B is due to chance.
+
+```{r}
+
+# ---- setup ----
+library(tidyverse)
+library(refugees)
+set.seed(42)
+
+# ---- slice & blocs ----
+origin_sel <- "SYR"
+# compute through the latest year available in your table
+max_year <- asylum_decisions |> summarise(mx = max(year, na.rm = TRUE)) |> pull(mx)
+years_sel <- 2011:max_year
+
+bloc_A_isos <- c("SWE","NOR","DNK")  # Nordics
+bloc_B_isos <- c("DEU","AUT","CHE")  # DACH
+
+# ---- helper: aggregate counts & rates for ONE year ----
+get_bloc_summary <- function(decisions, year, origin_iso, A_isos, B_isos) {
+  decisions |>
+    filter(year == !!year, coo_iso == !!origin_iso) |>
+    mutate(
+      recognized = dec_recognized + dec_other,  # tweak if your 'refugees' build names differ
+      total      = dec_total
+    ) |>
+    filter(coa_iso %in% c(A_isos, B_isos)) |>
+    mutate(bloc = case_when(
+      coa_iso %in% A_isos ~ "A",
+      coa_iso %in% B_isos ~ "B"
+    )) |>
+    group_by(bloc) |>
+    summarise(
+      rec  = sum(recognized, na.rm = TRUE),
+      n    = sum(total,      na.rm = TRUE),
+      rate = rec / n,
+      .groups = "drop"
+    )
+}
+
+
+```
