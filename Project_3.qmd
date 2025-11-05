@@ -10,47 +10,125 @@ execute:
   message: false
 ---
 
--   The quesiton I'm exploring in this project is this: are asylum **recognition rates** for a chosen origin group meaningfully different between two blocs of countries! I'm looking into this because recognition rates shape real outcomes for applicants and reflect policy differences. A systematic gap could imply procedural, resource, or contextual disparities.
+hat you plan to do (3-4 sentences). end with a description of what you did (3-4 sentences). That is, use words to guide the reader through your analysis
 
--   **Null (H0):** given the cases we observe (origin + year fixed), **bloc labels are exchangeable**; any difference in average recognition rate between Bloc A and Bloc B is due to chance.
+In this project I will test whether **country-level recognition rates** for Syrian asylum applicants differ between two small, meaningful blocs, the Big 4 Nations in the EU —Germany, France, Italy, Spain— and Nordic nations—Sweden, Norway, Denmark. I’ll focus on the general peak of the refugee crisis (between 2014-2017, inclusive).
 
 ```{r}
-
-# ---- setup ----
 library(tidyverse)
 library(refugees)
-set.seed(42)
 
-# ---- slice & blocs ----
+```
+
+This code creates a data frame that keeps the relevant EU and Nordic countries that received asylum claims from Syria between the years of 2014 and 2024. It selects the COO ISO code for Syria ("SYR"), the COA ISO codes for the EU and Nordic Blocs respectively, then calculates their recognition rates using rec_total, which summarizes the decision(whether it was through official recognition channels through UNHCR's mandate or other forms of asylum protection, and n_total, which is the total number of applications received by a given country, and dividing rec_total by n_total. It then outputs a tibble with each asylum country, their rate, and their bloc. It also removes NAs and prevents dividing by 0 during the rate calculations. It also returns an table with the mean and median recognition rates aggregated by bloc.
+
+```{r}
+# focus
 origin_sel <- "SYR"
-# compute through the latest year available in your table
-max_year <- asylum_decisions |> summarise(mx = max(year, na.rm = TRUE)) |> pull(mx)
-years_sel <- 2011:max_year
 
-bloc_A_isos <- c("SWE","NOR","DNK")  # Nordics
-bloc_B_isos <- c("DEU","AUT","CHE")  # DACH
-
-# ---- helper: aggregate counts & rates for ONE year ----
-get_bloc_summary <- function(decisions, year, origin_iso, A_isos, B_isos) {
-  decisions |>
-    filter(year == !!year, coo_iso == !!origin_iso) |>
+ref_slice <- asylum_decisions|>
+  select(year, coo_iso, coa_iso, dec_recognized, dec_other, dec_total)|>
+  filter(coo_iso == origin_sel,
+         year >= 2014,
+         (coa_iso == "DEU" | coa_iso == "FRA" | coa_iso == "ITA" | coa_iso == "ESP" |
+          coa_iso == "SWE" | coa_iso == "NOR" | coa_iso == "DNK"))|>
+  group_by(coa_iso)|>
+  summarise(
+    rec_total = sum(dec_recognized + dec_other, na.rm = TRUE),
+    n_total   = sum(dec_total, na.rm = TRUE),
+    rec_rate  = if_else(n_total > 0, rec_total / n_total, NA_real_),
+  )|>
     mutate(
-      recognized = dec_recognized + dec_other,  # tweak if your 'refugees' build names differ
-      total      = dec_total
-    ) |>
-    filter(coa_iso %in% c(A_isos, B_isos)) |>
-    mutate(bloc = case_when(
-      coa_iso %in% A_isos ~ "A",
-      coa_iso %in% B_isos ~ "B"
-    )) |>
-    group_by(bloc) |>
-    summarise(
-      rec  = sum(recognized, na.rm = TRUE),
-      n    = sum(total,      na.rm = TRUE),
-      rate = rec / n,
-      .groups = "drop"
+    bloc = case_when(
+      (coa_iso == "DEU" | coa_iso == "FRA" | coa_iso == "ITA" | coa_iso == "ESP") ~ "EU Big-4",
+      (coa_iso == "SWE" | coa_iso == "NOR" | coa_iso == "DNK")                   ~ "Nordics",
+      TRUE ~ NA_character_
     )
-}
+  )|>
+  filter(!is.na(bloc), !is.na(rec_rate))|>
+  mutate(bloc = factor(bloc, levels = c("EU Big-4","Nordics")))
+
+ref_slice
+
+ggplot(ref_slice, aes(x = bloc, y = rec_rate)) +
+  geom_boxplot(width = 0.55, outlier.shape = NA) +
+  geom_jitter(width = 0.08, alpha = 0.8) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Country recognition rates (2014–2024)",
+    subtitle = "SYR applicants | one point per country; box summarizes each bloc",
+    x = NULL, y = "Recognition rate"
+  ) +
+  theme_minimal(base_size = 12)
+
+```
+
+The below code provides the aggregate visualization to calculate the scores between EU and Nordic companies
+
+```{r}
+bloc_avgs_unweighted <- ref_slice |>
+  group_by(bloc) |>
+  summarise(
+    mean_rate   = mean(rec_rate),
+    median_rate = median(rec_rate),
+    n_countries = n(),
+    .groups = "drop"
+  )
+
+bloc_avgs_unweighted
+
+```
+
+I used the below function to randomly assign data points to each
+
+```{r}
+  perm_data <- function(rep, data){
+  data |> 
+    select(bloc, rec_rate) |> 
+    mutate(rec_rate_perm = sample(rec_rate, replace = FALSE)) |> 
+    group_by(bloc) |> 
+    summarise(obs_ave = mean(rec_rate),      
+              obs_med = median(rec_rate),
+              perm_ave = mean(rec_rate_perm),
+              perm_med = median(rec_rate_perm)) |>
+    summarise(obs_ave_diff = diff(obs_ave),
+              obs_med_diff = diff(obs_med),
+              perm_ave_diff = diff(perm_ave),
+              perm_med_diff = diff(perm_med),
+              rep = rep)
+  }
+  
+```
+
+I will generate 500 simulated null data sets to show the distribution
+
+```{r}
+set.seed(47)
+
+perm_stats <- map(c(1:5000), perm_data, data = ref_slice) |> 
+  list_rbind()
 
 
+# --- null histograms with observed vertical lines ---
+perm_stats |> 
+  ggplot(aes(x = perm_ave_diff)) + 
+  geom_histogram() + 
+  geom_vline(aes(xintercept = obs_ave_diff), color = "red")
+
+perm_stats |> 
+  ggplot(aes(x = perm_med_diff)) + 
+  geom_histogram() + 
+  geom_vline(aes(xintercept = obs_med_diff), color = "red")
+```
+
+```{r}
+perm_summary <- perm_stats %>% 
+  summarise(
+    p_val_mean_two_sided   = mean(abs(perm_ave_diff)   >= abs(obs_ave_diff)),
+    p_val_median_two_sided = mean(abs(perm_med_diff)   >= abs(obs_med_diff)),
+    obs_mean_diff          = first(obs_ave_diff),
+    obs_median_diff        = dplyr::first(obs_med_diff)
+  )
+
+perm_summary
 ```
