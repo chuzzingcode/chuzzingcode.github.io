@@ -72,7 +72,7 @@ This plot compares **country-level recognition rates** for Syrian applicants acr
 
 ggplot(ref_slice, aes(x = bloc, y = rec_rate)) +
   geom_boxplot() +
-  geom_jitter()+
+  geom_jitter() +
   labs(
     title = "Country recognition rates for SYR refugees (2014–2024)",
     x = NULL, y = "Recognition rate"
@@ -118,7 +118,6 @@ perm_stats <- map(c(1:5000), perm_data, data = ref_slice) |>
   list_rbind()
 
 
-# --- null histograms with observed vertical lines ---
 perm_stats |> 
   ggplot(aes(x = perm_ave_diff)) + 
   geom_histogram() + 
