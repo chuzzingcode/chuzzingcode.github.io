@@ -73,7 +73,6 @@ This plot compares **country-level recognition rates** for Syrian applicants acr
 ggplot(ref_slice, aes(x = bloc, y = rec_rate)) +
   geom_boxplot() +
   geom_jitter()+
-  scale_y_continuous(labels = scales::percent) +
   labs(
     title = "Country recognition rates for SYR refugees (2014–2024)",
     x = NULL, y = "Recognition rate"
