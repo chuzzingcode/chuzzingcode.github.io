@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project_3 – Christopher Hussey</title>
+<title>Variance in Syrian Refugee Recognition Across Europe (2014-2024) – Christopher Hussey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -165,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project_3</h1>
+<h1 class="title">Variance in Syrian Refugee Recognition Across Europe (2014-2024)</h1>
 </div>
 
 
@@ -182,8 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>hat you plan to do (3-4 sentences). end with a description of what you did (3-4 sentences). That is, use words to guide the reader through your analysis</p>
-<p>In this project I will test whether <strong>country-level recognition rates</strong> for Syrian asylum applicants differ between two small, meaningful blocs, the Big 4 Nations in the EU —Germany, France, Italy, Spain— and Nordic nations—Sweden, Norway, Denmark. I’ll focus on the general peak of the refugee crisis (between 2014-2017, inclusive).</p>
+<p>In this project I test whether country-level recognition rates for Syrian asylum applicants differ between two European blocs: the EU Big-4 (Germany, France, Italy, Spain) and the Nordics (Sweden, Norway, Denmark). I focus on the Syrian refugees, ranging from the 2014-17 refugee crisis, to recent regional conflict, culminating in using data from 2014–2024. I compute each country’s recognition rate compare bloc means/medians, and assess significance with a permutation test.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -201,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ref_slice <span class="ot">&lt;-</span> asylum_decisions<span class="sc">|&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, coo_iso, coa_iso, dec_recognized, dec_other, dec_total)<span class="sc">|&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(coo_iso <span class="sc">==</span> origin_sel,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         year <span class="sc">&gt;=</span> <span class="dv">2014</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>,</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         (coa_iso <span class="sc">==</span> <span class="st">"DEU"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"FRA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ITA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ESP"</span> <span class="sc">|</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          coa_iso <span class="sc">==</span> <span class="st">"SWE"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"NOR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"DNK"</span>))<span class="sc">|&gt;</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(coa_iso)<span class="sc">|&gt;</span></span>
@@ -234,41 +233,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6 NOR         16831   21407    0.786 Nordics 
 7 SWE         95822  117367    0.816 Nordics </code></pre>
 </div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ref_slice, <span class="fu">aes</span>(<span class="at">x =</span> bloc, <span class="at">y =</span> rec_rate)) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.55</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.08</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Country recognition rates (2014–2024)"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"SYR applicants | one point per country; box summarizes each bloc"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Recognition rate"</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Project_3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
-</div>
-</div>
-<p>The below code provides the aggregate visualization to calculate the scores between EU and Nordic companies</p>
+<p>The below code provides the aggregate median and average recognition rates between EU and Nordic countries.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bloc_avgs_unweighted <span class="ot">&lt;-</span> ref_slice <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bloc) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_rate   =</span> <span class="fu">mean</span>(rec_rate),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_rate =</span> <span class="fu">median</span>(rec_rate),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_countries =</span> <span class="fu">n</span>(),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>bloc_avgs_unweighted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bloc_avgs_unweighted <span class="ot">&lt;-</span> ref_slice <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bloc) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_rate   =</span> <span class="fu">mean</span>(rec_rate),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_rate =</span> <span class="fu">median</span>(rec_rate),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_countries =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>bloc_avgs_unweighted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
@@ -278,7 +257,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 2 Nordics      0.851       0.816           3</code></pre>
 </div>
 </div>
-<p>I used the below function to randomly assign data points to each</p>
+<p>This plot compares <strong>country-level recognition rates</strong> for Syrian applicants across the <strong>EU Big-4</strong> and the <strong>Nordics</strong>. The central lines (medians) are close, and the boxes/whiskers overlap substantially. Within the Nordics there’s visibly more dispersion, but the EU Big-4 are <strong>tighter with lower-variance</strong>. Visually, any bloc gap looks <strong>small relative to country-to-country variation</strong>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ref_slice, <span class="fu">aes</span>(<span class="at">x =</span> bloc, <span class="at">y =</span> rec_rate)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()<span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Country recognition rates for SYR refugees (2014–2024)"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Recognition rate"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Based on this data, My research question would be, do the Nordic countries on average and on median have a lower recognition rate than the EU big 4 for Syrian Refugees?</p>
+<p>My Null hypothesis would be there is no difference in the average or median recognition rate between Nordic and Big 4 EU countries.</p>
+<p>My alternative hypothesis is that EU big 4 countries have a higher median and average recognition rate than Nordic countries.</p>
+<p>I used the below function to randomly assign data points to each country in the study. The null hypothesis would assume that the random assignment should produce test statistics similar to the observed statistics!</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -299,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>I will generate 500 simulated null data sets to show the distribution</p>
+<p>I will generate 500 simulated null data sets to show the distribution of permuted mean and median differences on a histogram. A red line will show the observed mean and median differences in the original data set.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -318,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project_3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project_3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -332,31 +336,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project_3_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project_3_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Due to the red line’s proximity to the center of the distribution in both, it seems the data has failed to reject the null hypothesis. This means it is likely there is not a significant difference between the observed values and the expected difference To verify there is no real difference, the below data will provide the P-value.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>perm_summary <span class="ot">&lt;-</span> perm_stats <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_val_mean_two_sided   =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_ave_diff)   <span class="sc">&gt;=</span> <span class="fu">abs</span>(obs_ave_diff)),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_val_median_two_sided =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_med_diff)   <span class="sc">&gt;=</span> <span class="fu">abs</span>(obs_med_diff)),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs_mean_diff          =</span> <span class="fu">first</span>(obs_ave_diff),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs_median_diff        =</span> dplyr<span class="sc">::</span><span class="fu">first</span>(obs_med_diff)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>perm_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>perm_stats <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_val_ave =</span> <span class="fu">mean</span>(perm_ave_diff <span class="sc">&gt;</span> obs_ave_diff),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_val_med =</span> <span class="fu">mean</span>(perm_med_diff <span class="sc">&gt;</span> obs_med_diff))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 4
-  p_val_mean_two_sided p_val_median_two_sided obs_mean_diff obs_median_diff
-                 &lt;dbl&gt;                  &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;
-1                0.740                  0.942        0.0257        -0.00749</code></pre>
+<pre><code># A tibble: 1 × 2
+  p_val_ave p_val_med
+      &lt;dbl&gt;     &lt;dbl&gt;
+1     0.350     0.436</code></pre>
 </div>
 </div>
+<p>Across 2014–2024, we <strong>fail to reject the null hypothesis.</strong> the EU Big-4 and Nordics do <strong>not</strong> exhibit a statistically detectable difference in country-level recognition rates for Syrian applicants when comparing bloc means/medians. The P-value signifies the likelihood that an observed result is due to random chance. Below, we see a P value for the average recognition rate of 34%, and for the median it is 43%. This means that there is a respective chance of 34% or 43% that the observed result is due to a random occurrence, and thus not enough to reject the null hypothesis</p>
+<p>Sources:</p>
+<p>UNHCR <strong><code>refugees</code></strong> R package — overview &amp; install guide:<br>
+</p>
+<p><a href="https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html?utm_source=chatgpt.com">https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html</a></p>
 
 
 
