@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chris Hussey">
 
-<title>Christopher Hussey</title>
+<title>Weaponized Data in the AFST – Christopher Hussey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,6 +34,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -88,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -112,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Project 3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Project_4.html"> 
+    <a class="nav-link active" href="./Project_4.html" aria-current="page"> 
 <span class="menu-text">Project 4</span></a>
   </li>  
 </ul>
@@ -126,39 +128,72 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
-<!-- main -->
-<div class="quarto-about-solana column-page">
-  <div class="about-entity">
-    <div class="entity-contents">
-      <header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Christopher Hussey</h1>
-</div>
-<div class="quarto-title-meta column-page">
-  </div>
-</header> <div class="about-links">
-  <a href="https://www.linkedin.com/in/christopher-hussey-b81b62152/" class="about-link" rel="" target="">
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/chuzzingcode" class="about-link" rel="" target="">
-     <span class="about-link-text">GitHub</span>
-  </a>
-  <a href="mailto::cthussey22@gmail.com" class="about-link" rel="" target="">
-     <span class="about-link-text">Email</span>
-  </a>
-</div>
-      <div class="about-contents"><main class="content column-page" id="quarto-document-content">
-<p>Hi! My name’s Christopher (though, I usually go by Chris), and welcome to my website! I’m a Politics, Philosophy, and Economics major at Pomona College, with a burgeoning interest in Data Science and all the visualizations that come with it. Some of my academic areas of interest are security, international relations, Post Structuralist philosophy, and surveillance! Outside of class, you can catch me skating, planning events, and stressing about class!</p>
-
-
-</main></div>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-allegheny-family-screening-tool-and-the-ethics-of-predictive-welfare-surveillance" id="toc-the-allegheny-family-screening-tool-and-the-ethics-of-predictive-welfare-surveillance" class="nav-link active" data-scroll-target="#the-allegheny-family-screening-tool-and-the-ethics-of-predictive-welfare-surveillance"><em>The Allegheny Family Screening Tool and the Ethics of Predictive Welfare Surveillance</em></a></li>
+  </ul>
+</nav>
     </div>
-    <img src="media/headshot small.JPEG" class="about-image
-  rounded " style="width: 17em;">
-  </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Weaponized Data in the AFST</h1>
 </div>
- <!-- /main -->
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Chris Hussey </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-allegheny-family-screening-tool-and-the-ethics-of-predictive-welfare-surveillance" class="level3">
+<h3 class="anchored" data-anchor-id="the-allegheny-family-screening-tool-and-the-ethics-of-predictive-welfare-surveillance"><em>The Allegheny Family Screening Tool and the Ethics of Predictive Welfare Surveillance</em></h3>
+<p>What Is the AFST and Why It Matters</p>
+<p>The Allegheny Family Screening Tool (AFST) is an algorithm used by Allegheny County, Pennsylvania to help child welfare workers decide whether to investigate a hotline call about child neglect. When a report is filed, the system automatically pulls information from multiple public databases—welfare benefits, criminal justice involvement, juvenile probation, mental health records, and public school data—and uses that information to generate a risk score from 1 to 20, meant to predict the likelihood that a child will be removed from the home within two years.</p>
+<p>According to the <em>Pulitzer Center</em> (Ho &amp; Burke, 2022), the AFST was developed to help caseworkers manage high call volumes, reduce human bias, and allocate agency resources efficiently. The system is often described as a neutral, objective supplemental tool designed to assist human decision-making. However, as Ballantyne (2023) argues, the algorithm operates in a high-stakes context—its predictions can shape whether families experience intrusive investigations, heightened state surveillance, or even the possibility of temporary or permanent child removal. This combination of administrative data, predictive modeling, and discretionary state power makes the AFST a powerful example of the data science ethical dilemmas highlighted in <em>Data Feminism</em>, including the central questions: Who benefits? Who is harmed? and Whose priorities are embedded in the system?</p>
+<p>In what follows, I examine four core ethical issues—consent, representativeness, unintended data use, and racial proxies—and analyze how each plays out within this human-algorithm collaboration between social workers and algorithmic predictions.</p>
+<p>#1 Consent Structure</p>
+<p>The AFST raises significant concerns about whether meaningful consent is possible. Families whose information populates the system never knowingly agreed to have their welfare, education, or criminal justice records combined into an algorithmic decision-making tool. The <em>Pulitzer Center</em> article emphasizes that most families do not even know the algorithm exists, much less that it influences whether a caseworker opens an investigation into their home (Ho &amp; Burke, 2022). This means that, despite the deeply personal nature of the data involved, individuals cannot control how their information is used, cannot opt out, and cannot reasonably understand how ordinary interactions with public systems—such as applying for food stamps or receiving school attendance letters—may later be treated as risk indicators.</p>
+<p>Ballantyne (2023) further notes that consent is complicated by the inherent power imbalance between families and the state agencies that collect their data. Families interacting with welfare, education, or criminal justice systems typically have no choice but to provide information as a condition of receiving services or complying with legal requirements. This is not voluntary participation in research—it is coerced disclosure embedded in structural inequality. Therefore, informed consent is not only absent; the very possibility of informed consent is undermined by the conditions under which the data are collected.</p>
+<p>#2: Who Was Measured / Representativeness</p>
+<p>A core issue is who appears in the dataset. The AFST trains exclusively on data from families who interact with public systems, meaning poor and disproportionately Black families are the ones most heavily monitored. The <em>Pulitzer Center</em> makes clear that the algorithm draws from welfare records, school data, public mental health services, and criminal justice involvement—systems that are not evenly distributed across socioeconomic lines (Ho &amp; Burke, 2022). Families with higher income who use private healthcare, private schools, or do not rely on public benefits leave far fewer digital traces and therefore remain largely invisible to the model.</p>
+<p>This creates a severe representativeness problem. The algorithm purports to assess risk for children across the county, but in practice, it can only “see” those who are already hyper-surveilled through state systems. As Ballantyne (2023) points out, the model does not measure underlying risk; it measures exposure to public institutions. This means the AFST may conflate poverty with danger, treating structural disadvantage as evidence of impending neglect. From the perspective of <em>Data Feminism</em>, this demonstrates how power operates—the groups already monitored by the state become the objects of even greater scrutiny.</p>
+<p>#3: Is the Data Being Used in Unintended Ways?</p>
+<p>The AFST’s use of administrative data illustrates a classic case of function creep, where information collected for one purpose is repurposed for a different, often more punitive, goal. Welfare records were originally gathered to distribute benefits, school records to track educational progress, and criminal justice data to document legal processes. But according to the <em>Pulitzer Center</em>, this disparate information is now merged to generate family risk scores (Ho &amp; Burke, 2022). The algorithm reframes routine or structural conditions—such as unemployment, food insecurity, or living in a heavily policed neighborhood—as potential indicators of future child maltreatment.</p>
+<p>Ballantyne (2023) argues that this repurposing fundamentally changes the meaning of the data: information that once signaled a need for support now becomes evidence the state could act upon. This raises ethical concerns about whether individuals should be subject to predictive analysis based on data they provided for unrelated administrative reasons. The recontextualization of data, without public awareness or consent, expands the reach of state surveillance under the guise of efficiency.</p>
+<p>#4: Should Race Be Used? Is It a Proxy?</p>
+<p>Even though race is not explicitly included as a variable, the AFST incorporates numerous proxy variables that reflect racial disparities. Variables such as zip code, welfare usage, school suspensions, juvenile probation, and arrest records are deeply correlated with race due to long-standing structural inequities. The <em>Pulitzer Center</em> article notes that these patterns cause families of color—especially Black families—to receive disproportionately higher risk scores (Ho &amp; Burke, 2022). Removing the race variable does not remove racial influence; it only hides it behind factors shaped by residential segregation, policing practices, and unequal access to resources.</p>
+<p>Ballantyne (2023) points out that the algorithm’s design reinforces existing inequities by reproducing the racial patterns embedded in the data. Instead of addressing the conditions that shape the data (poverty, discrimination, over-policing), the tool treats these structural forces as individual-level risk factors. This mirrors a key question from the <em>Data Feminism</em> framework: Is the issue really “bias in the algorithm,” or is the algorithm simply reflecting unjust systems that already exist?</p>
+<p>Why This Matters:</p>
+<p>The AFST illustrates how data science systems can shift power toward institutions and away from the people they govern. Who benefits? The county and its caseworkers gain efficiency and predictive tools that help allocate scarce resources. Who is harmed? Families who are already marginalized face heightened surveillance, invasive investigations, and greater risk of family separation. As Ballantyne (2023) emphasizes, even the best-intentioned human–AI collaborations can cause harm when they reinforce unequal power structures. And as the <em>Pulitzer Center</em> shows, the ethical dilemmas here are not hypothetical—the algorithm’s risk scores shape real decisions with life-altering consequences.</p>
+<p>Ultimately, this case reflects the broader pattern described in <em>Data Feminism</em>: data science is often used “in the service of surveillance (of the minoritized) and efficiency (amidst scarcity).” The AFST is not just a technical tool; it is a form of governance that makes certain families more visible to the state while others remain unseen. It embeds social inequalities into mathematical form, presenting them as objective truth. This matters because data-driven decisions often carry an aura of neutrality that masks the power relations beneath. Understanding these dynamics is crucial if data science is to be used ethically and responsibly in social systems.</p>
+<p>7. References</p>
+<p>Ballantyne, N. (2023). <em>The harm that data do: The case of the Allegheny Family Screening Tool</em>. Medium. <a href="https://medium.com/@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2">https://medium.com/@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2</a></p>
+<p>Ho, S., &amp; Burke, G. (2022). <em>An algorithm that screens for child neglect raises concerns</em>. Pulitzer Center. <a href="https://pulitzercenter.org/stories/algorithm-screens-child-neglect-raises-concerns" class="uri">https://pulitzercenter.org/stories/algorithm-screens-child-neglect-raises-concerns</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -179,6 +214,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
