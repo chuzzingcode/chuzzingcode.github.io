@@ -126,7 +126,11 @@ ggplot(oak_stops_by_type,
 
 ```
 
-The first clear trend in Oakland's visualization is tht vehicular stops overwhelmingly dominate pedestrian stops across all racial groups. This suggests that most of the police–public contact reported in the Stanford study occured through vehicle enforcement rather than interactions with pedestrians. Furthermore, Black residents experience the highest number of vehicular stops by a substantial margin, far exceeding all other racial groups. This stands out in contrast to the San Diego and San Francisco patterns observed before, where white and Asian/Pacific Islander groups accounted for the largest raw stop numbers. Pedestrian stops, while much smaller in volume, mirror the same general racial ordering as vehicular stops, with Black individuals again experiencing the highest number.
+The first clear trend in Oakland's visualization is that vehicular stops overwhelmingly dominate pedestrian stops across all racial groups. This suggests that most of the police–public contact reported in the Stanford study occured through vehicle enforcement rather than interactions with pedestrians. Furthermore, Black residents experience the highest number of vehicular stops by a substantial margin, far exceeding all other racial groups. This stands out in contrast to the San Diego and San Francisco patterns observed before, where white and Asian/Pacific Islander groups accounted for the largest raw stop numbers. Pedestrian stops, while much smaller in volume, mirror the same general racial ordering as vehicular stops, with Black individuals again experiencing the highest number.
+
+```{r}
+dbDisconnect(con_traffic)
+```
 
 References:
 

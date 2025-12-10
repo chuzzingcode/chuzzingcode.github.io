@@ -50,8 +50,165 @@ The AFST illustrates how data science systems can shift power toward institution
 
 Ultimately, this case reflects the broader pattern described in *Data Feminism*: data science is often used “in the service of surveillance (of the minoritized) and efficiency (amidst scarcity).” The AFST is not just a technical tool; it is a form of governance that makes certain families more visible to the state while others remain unseen. It embeds social inequalities into mathematical form, presenting them as objective truth. This matters because data-driven decisions often carry an aura of neutrality that masks the power relations beneath. Understanding these dynamics is crucial if data science is to be used ethically and responsibly in social systems.
 
-7\. References
+CASE 2: NYC, Stop and Frisk, and Predictive Policing.
+
+This analysis explores the distribution of NYPD stop-and-frisk encounters across racial groups using publicly reported 2024 data. This approach highlights who appears in the administrative record, which is essential for understanding how predictive systems—whether in policing or child welfare—learn patterns of state surveillance rather than neutral patterns of risk.
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+sf <- read_excel("~/Downloads/sqf-2024.xlsx")
+
+sf_clean <- sf |>
+  mutate(
+    race   = SUSPECT_RACE_DESCRIPTION,
+    frisk  = FRISKED_FLAG == "Y",
+    search = SEARCHED_FLAG == "Y",
+    arrest = SUSPECT_ARRESTED_FLAG == "Y",
+    weapon = WEAPON_FOUND_FLAG == "Y"
+  ) |>
+  filter(!is.na(race), race != "(null)")
+
+
+```
+
+![]()
+
+```{r}
+
+summary_race <- sf_clean |>
+  group_by(race) |>
+  summarize(
+    stops = n(),
+    frisks = sum(frisk,   na.rm = TRUE),
+    searches = sum(search,  na.rm = TRUE),
+    arrests = sum(arrest,  na.rm = TRUE),
+    weapons = sum(weapon,  na.rm = TRUE)
+  ) |>
+  mutate(
+    prop_stops = stops    / sum(stops),
+    prop_frisks = frisks   / sum(frisks),
+    prop_searches = searches / sum(searches),
+    prop_arrests = arrests  / sum(arrests),
+    prop_weapons = weapons  / sum(weapons)
+  ) |>
+  arrange(desc(prop_stops))
+
+
+```
+
+![]()
+
+Search rate by race:
+
+```{r}
+summary_race |>
+  ggplot(aes(x = reorder(race, prop_stops), y = prop_stops)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Share of All NYPD Stops by Race — 2024",
+    x = "Race",
+    y = "Proportion of All Stops",
+    caption = "Data: NYPD Stop-and-Frisk 2024"
+  )
+
+
+```
+
+Search Rate by Race
+
+```{r}
+summary_race |>
+  ggplot(aes(x = reorder(race, prop_searches), y = prop_searches)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Share of All NYPD Searches by Race — 2024",
+    x = "Race",
+    y = "Proportion of All Searches",
+    caption = "Data: NYPD Stop-and-Frisk 2024"
+  )
+
+
+```
+
+Arrest rate by race
+
+```{r}
+summary_race |>
+  ggplot(aes(x = reorder(race, prop_arrests), y = prop_arrests)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Share of All NYPD Arrests by Race — 2024",
+    x = "Race",
+    y = "Proportion of All Arrests",
+    caption = "Data: NYPD Stop-and-Frisk 2024"
+  )
+
+```
+
+```{r}
+black_df <- sf_clean |>
+  filter(race == "BLACK") |>
+  summarize(
+    black_stops = n(),
+    black_arrests = sum(arrest, na.rm = TRUE)
+  ) |>
+  mutate(
+    black_non_arrests = black_stops - black_arrests
+  )
+
+black_plot <- black_df |>
+  pivot_longer(
+    cols = c(black_arrests, black_non_arrests),
+    names_to = "outcome",
+    values_to = "count"
+  ) |>
+  mutate(
+    outcome = if_else(outcome == "black_arrests", "Arrests", "Not Arrested")
+  )
+
+
+```
+
+```{r}
+black_plot |>
+  mutate(
+    percent = count / sum(count)
+  ) |>
+  ggplot(aes(x = "", y = percent, fill = outcome)) +
+  geom_col(width = 1) +
+  geom_text(aes(label = scales::percent(percent, accuracy = 0.1)),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y") +
+  labs(
+    title = "What Share of Black Stops Resulted in Arrests? — NYPD 2024",
+    fill = "",
+    caption = "Data: NYPD Stop-and-Frisk 2024"
+  ) +
+  theme_void()
+
+```
+
+Case 1 References
 
 Ballantyne, N. (2023). *The harm that data do: The case of the Allegheny Family Screening Tool*. Medium. [https://medium.com/\@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2](https://medium.com/@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2)
 
 Ho, S., & Burke, G. (2022). *An algorithm that screens for child neglect raises concerns*. Pulitzer Center. <https://pulitzercenter.org/stories/algorithm-screens-child-neglect-raises-concerns>
+
+Case 2 References:
+
+Lum, K., & Isaac, W. (2016). *To predict and serve?* **Significance, 13**(5), 14–19. Royal Statistical Society. <https://doi.org/10.1111/j.1740-9713.2016.00960.x> [[Wiley Online Library+1]{.underline}](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00960.x?utm_source=chatgpt.com){alt="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00960.x?utm_source=chatgpt.com"}
+
+Joh, E. E. (2017). *Feeding the machine: Policing, crime data, & algorithms.* **William & Mary Bill of Rights Journal, 26**, 287–329. [https://scholarship.law.wm.edu/wmborj/vol26/iss2/3](https://scholarship.law.wm.edu/wmborj/vol26/iss2/3?utm_source=chatgpt.com) [[W&M Law School Scholarship Repository+2W&M Law School Scholarship Repository+2]{.underline}](https://scholarship.law.wm.edu/wmborj/vol26/iss2/3/?utm_source=chatgpt.com){alt="https://scholarship.law.wm.edu/wmborj/vol26/iss2/3/?utm_source=chatgpt.com"}
+
+Robinson, D., & Koepke, L. (2016). *Stuck in a pattern: Early evidence on “predictive policing” and civil rights.* Upturn. https://www.teamupturn.com/reports/2016/stuck-in-a-pattern [[Upturn+2Upturn+2]{.underline}](https://www.upturn.org/static/reports/2016/stuck-in-a-pattern/files/Upturn_-_Stuck_In_a_Pattern_v.1.01.pdf?utm_source=chatgpt.com){alt="https://www.upturn.org/static/reports/2016/stuck-in-a-pattern/files/Upturn_-_Stuck_In_a_Pattern_v.1.01.pdf?utm_source=chatgpt.com"}
+
+Kofman, A., & Scheiber, N. (2023, October 2). *Predictive policing software terrible at predicting crimes.* **The Markup** (with Northeastern University). [https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes](https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes?utm_source=chatgpt.com) [[The Markup+2College of Social Sciences+2]{.underline}](https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes?utm_source=chatgpt.com){alt="https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes?utm_source=chatgpt.com"}
+
+Leadership Conference on Civil and Human Rights. (2016, August 31). *Civil rights and tech advocates sound alarm on racial bias in “predictive policing.”* [https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/](https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/?utm_source=chatgpt.com) [[Leadership Conference+2The Guardian+2]{.underline}](https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/?utm_source=chatgpt.com){alt="https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/?utm_source=chatgpt.com"}
+
+Wyden, R., et al. (2024, January 29). *US lawmakers tell DOJ to quit blindly funding “predictive” police tools.* **WIRED.** [https://www.wired.com/story/doj-predictive-policing-lawmakers-demand/](https://www.wired.com/story/doj-predictive-policing-lawmakers-demand/?utm_source=chatgpt.com) [[WIRED]{.underline}](https://www.wired.com/story/doj-predictive-policing-lawmakers-demand?utm_source=chatgpt.com){alt="https://www.wired.com/story/doj-predictive-policing-lawmakers-demand?utm_source=chatgpt.com"}
