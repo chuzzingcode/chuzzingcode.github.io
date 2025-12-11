@@ -1,18 +1,18 @@
 ---
-title: "Weaponized Data in the AFST"
+title: "Algorithmic bias from AFST to Predictive Policing"
 author: "Chris Hussey"
 format:
   html:
     code-fold: true
 execute:
-  echo: false
+  echo: true
   warning: false
   message: false
 ---
 
-### *The Allegheny Family Screening Tool and the Ethics of Predictive Welfare Surveillance*
+## **Case 1: The Allegheny Family Screening Tool and the Ethics of Predictive Welfare Surveillance**
 
-What Is the AFST and Why It Matters
+#### What Is the AFST and Why It Matters
 
 The Allegheny Family Screening Tool (AFST) is an algorithm used by Allegheny County, Pennsylvania to help child welfare workers decide whether to investigate a hotline call about child neglect. When a report is filed, the system automatically pulls information from multiple public databases—welfare benefits, criminal justice involvement, juvenile probation, mental health records, and public school data—and uses that information to generate a risk score from 1 to 20, meant to predict the likelihood that a child will be removed from the home within two years.
 
@@ -20,46 +20,76 @@ According to the *Pulitzer Center* (Ho & Burke, 2022), the AFST was developed to
 
 In what follows, I examine four core ethical issues—consent, representativeness, unintended data use, and racial proxies—and analyze how each plays out within this human-algorithm collaboration between social workers and algorithmic predictions.
 
-#1 Consent Structure
+#### #1 Consent Structure
 
 The AFST raises significant concerns about whether meaningful consent is possible. Families whose information populates the system never knowingly agreed to have their welfare, education, or criminal justice records combined into an algorithmic decision-making tool. The *Pulitzer Center* article emphasizes that most families do not even know the algorithm exists, much less that it influences whether a caseworker opens an investigation into their home (Ho & Burke, 2022). This means that, despite the deeply personal nature of the data involved, individuals cannot control how their information is used, cannot opt out, and cannot reasonably understand how ordinary interactions with public systems—such as applying for food stamps or receiving school attendance letters—may later be treated as risk indicators.
 
 Ballantyne (2023) further notes that consent is complicated by the inherent power imbalance between families and the state agencies that collect their data. Families interacting with welfare, education, or criminal justice systems typically have no choice but to provide information as a condition of receiving services or complying with legal requirements. This is not voluntary participation in research—it is coerced disclosure embedded in structural inequality. Therefore, informed consent is not only absent; the very possibility of informed consent is undermined by the conditions under which the data are collected.
 
-#2: Who Was Measured / Representativeness
+#### #2: Who Was Measured / Representativeness
 
 A core issue is who appears in the dataset. The AFST trains exclusively on data from families who interact with public systems, meaning poor and disproportionately Black families are the ones most heavily monitored. The *Pulitzer Center* makes clear that the algorithm draws from welfare records, school data, public mental health services, and criminal justice involvement—systems that are not evenly distributed across socioeconomic lines (Ho & Burke, 2022). Families with higher income who use private healthcare, private schools, or do not rely on public benefits leave far fewer digital traces and therefore remain largely invisible to the model.
 
 This creates a severe representativeness problem. The algorithm purports to assess risk for children across the county, but in practice, it can only “see” those who are already hyper-surveilled through state systems. As Ballantyne (2023) points out, the model does not measure underlying risk; it measures exposure to public institutions. This means the AFST may conflate poverty with danger, treating structural disadvantage as evidence of impending neglect. From the perspective of *Data Feminism*, this demonstrates how power operates—the groups already monitored by the state become the objects of even greater scrutiny.
 
-#3: Is the Data Being Used in Unintended Ways?
+#### #3: Is the Data Being Used in Unintended Ways?
 
 The AFST’s use of administrative data illustrates a classic case of function creep, where information collected for one purpose is repurposed for a different, often more punitive, goal. Welfare records were originally gathered to distribute benefits, school records to track educational progress, and criminal justice data to document legal processes. But according to the *Pulitzer Center*, this disparate information is now merged to generate family risk scores (Ho & Burke, 2022). The algorithm reframes routine or structural conditions—such as unemployment, food insecurity, or living in a heavily policed neighborhood—as potential indicators of future child maltreatment.
 
 Ballantyne (2023) argues that this repurposing fundamentally changes the meaning of the data: information that once signaled a need for support now becomes evidence the state could act upon. This raises ethical concerns about whether individuals should be subject to predictive analysis based on data they provided for unrelated administrative reasons. The recontextualization of data, without public awareness or consent, expands the reach of state surveillance under the guise of efficiency.
 
-#4: Should Race Be Used? Is It a Proxy?
+#### #4: Should Race Be Used? Is It a Proxy?
 
-Even though race is not explicitly included as a variable, the AFST incorporates numerous proxy variables that reflect racial disparities. Variables such as zip code, welfare usage, school suspensions, juvenile probation, and arrest records are deeply correlated with race due to long-standing structural inequities. The *Pulitzer Center* article notes that these patterns cause families of color—especially Black families—to receive disproportionately higher risk scores (Ho & Burke, 2022). Removing the race variable does not remove racial influence; it only hides it behind factors shaped by residential segregation, policing practices, and unequal access to resources.
+Even though race is not explicitly included as a variable, the AFST incorporates numerous proxy variables that reflect racial disparities. Variables such as zip code, welfare usage, school suspensions, juvenile probation, and arrest records are deeply correlated with race due to long-standing structural inequities. Ho & Burke note that these patterns cause families of color—especially Black families—to receive disproportionately higher risk scores (Ho & Burke, 2022). Removing the race variable does not remove racial influence; it only hides it behind factors shaped by residential segregation, policing practices, and unequal access to resources.
 
 Ballantyne (2023) points out that the algorithm’s design reinforces existing inequities by reproducing the racial patterns embedded in the data. Instead of addressing the conditions that shape the data (poverty, discrimination, over-policing), the tool treats these structural forces as individual-level risk factors. This mirrors a key question from the *Data Feminism* framework: Is the issue really “bias in the algorithm,” or is the algorithm simply reflecting unjust systems that already exist?
 
-Why This Matters:
+#### Why This Matters:
 
 The AFST illustrates how data science systems can shift power toward institutions and away from the people they govern. Who benefits? The county and its caseworkers gain efficiency and predictive tools that help allocate scarce resources. Who is harmed? Families who are already marginalized face heightened surveillance, invasive investigations, and greater risk of family separation. As Ballantyne (2023) emphasizes, even the best-intentioned human–AI collaborations can cause harm when they reinforce unequal power structures. And as the *Pulitzer Center* shows, the ethical dilemmas here are not hypothetical—the algorithm’s risk scores shape real decisions with life-altering consequences.
 
 Ultimately, this case reflects the broader pattern described in *Data Feminism*: data science is often used “in the service of surveillance (of the minoritized) and efficiency (amidst scarcity).” The AFST is not just a technical tool; it is a form of governance that makes certain families more visible to the state while others remain unseen. It embeds social inequalities into mathematical form, presenting them as objective truth. This matters because data-driven decisions often carry an aura of neutrality that masks the power relations beneath. Understanding these dynamics is crucial if data science is to be used ethically and responsibly in social systems.
 
-CASE 2: NYC, Stop and Frisk, and Predictive Policing.
+References:
 
-This analysis explores the distribution of NYPD stop-and-frisk encounters across racial groups using publicly reported 2024 data. This approach highlights who appears in the administrative record, which is essential for understanding how predictive systems—whether in policing or child welfare—learn patterns of state surveillance rather than neutral patterns of risk.
+Case 1 References
+
+Ballantyne, N. (2023). *The harm that data do: The case of the Allegheny Family Screening Tool*. Medium. [https://medium.com/\@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2](https://medium.com/@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2)
+
+Ho, S., & Burke, G. (2022). *An algorithm that screens for child neglect raises concerns*. Pulitzer Center. <https://pulitzercenter.org/stories/algorithm-screens-child-neglect-raises-concerns>
+
+\
+D’Ignazio, C., & Klein, L. F. (2020). *Data Feminism.* MIT Press.
+
+## CASE 2: NYC, Stop and Frisk, and Predictive Policing.
+
+This analysis explores the distribution of NYPD stop-and-frisk encounters across racial groups using publicly reported 2024 data. This approach highlights who appears in the administrative record, which is essential for understanding how predictive systems—whether in policing or child welfare—learn patterns of state surveillance rather than neutral patterns of risk.For this case, I use the **2024 NYPD Stop-and-Frisk (SQF)** dataset, which contains one row for each recorded police stop. For our purposes, the most relevant information from the data is:
+
+-   The **suspect’s race** (as recorded by the officer)
+
+-   Whether the person was **frisked**
+
+-   Whether they were **searched**
+
+-   Whether they were **arrested**
+
+-   Whether a **weapon** was found
+
+However, the data also includes information about the officers, the locations of stops, probable cause, source of officer suspicion, consent, outcomes, whether or not the stop was self-initiated by the officer, and more.
+
+This type of administrative policing data is the same kind of record that often feeds predictive policing systems. By examining who appears in the data and how outcomes are distributed across race, we can see how predictive models learn patterns of surveillance, not neutral patterns of “crime risk.”
+
+---
+
+Here, I create a cleaner version of the dataset for my purposes. In doing so, I pull the race description of the suspects, Y/N stop outcomes, and drop N/A values
 
 ```{r}
 library(tidyverse)
 library(readxl)
 
-sf <- read_excel("~/Downloads/sqf-2024.xlsx")
+sf <- read_excel("sqf-2024.xlsx")
 
+#creates new columns with standardized variable names 
 sf_clean <- sf |>
   mutate(
     race   = SUSPECT_RACE_DESCRIPTION,
@@ -68,6 +98,8 @@ sf_clean <- sf |>
     arrest = SUSPECT_ARRESTED_FLAG == "Y",
     weapon = WEAPON_FOUND_FLAG == "Y"
   ) |>
+
+  #drop missing race labels so categories are interpretable
   filter(!is.na(race), race != "(null)")
 
 
@@ -75,11 +107,15 @@ sf_clean <- sf |>
 
 ![]()
 
+Next, I summarized the data by race. For each group, I compute the total number of stops, the number of frisks, searches, and arrests conducted by officers, and the proportion of city wide occurrences within each category for a given race.
+
 ```{r}
 
 summary_race <- sf_clean |>
   group_by(race) |>
   summarize(
+    
+    #Provides the total number of stops, frisks, searches, arrests, and weapons found by race
     stops = n(),
     frisks = sum(frisk,   na.rm = TRUE),
     searches = sum(search,  na.rm = TRUE),
@@ -87,6 +123,8 @@ summary_race <- sf_clean |>
     weapons = sum(weapon,  na.rm = TRUE)
   ) |>
   mutate(
+    
+    # Provides the proportion of each occurence by race
     prop_stops = stops    / sum(stops),
     prop_frisks = frisks   / sum(frisks),
     prop_searches = searches / sum(searches),
@@ -100,9 +138,14 @@ summary_race <- sf_clean |>
 
 ![]()
 
-Search rate by race:
+#### Stop rate by race:
+
+This plot shows **what share of all 2024 NYPD stops** involve suspects of each recorded race.
 
 ```{r}
+#| fig-alt: "Horizontal bar chart showing the proportion of all 2024 NYPD stops by reported suspect race"
+
+
 summary_race |>
   ggplot(aes(x = reorder(race, prop_stops), y = prop_stops)) +
   geom_col() +
@@ -117,7 +160,13 @@ summary_race |>
 
 ```
 
-Search Rate by Race
+This plot shows the distribution of NYPD stop-and-frisk encounters across racial groups in 2024. Black and Hispanic people together make up the largest share of recorded stops in the dataset. This does not tell us why these patterns occur, but it does illustrate an important point: administrative policing data reflect **where and with whom enforcement activity is documented**, not necessarily where underlying risk or harm exists.
+
+For predictive policing systems trained on data like these (of which the majority are), the model would primarily learn from these recorded patterns. This makes the dataset itself a useful example of how certain groups or neighborhoods can become more visible to algorithmic tools simply because they appear more often in historical records.
+
+#### Search Rate by Race
+
+This plot uses the same summary table but focuses on **searches**, not just stops. It shows what share of all recorded searches involve each racial group
 
 ```{r}
 summary_race |>
@@ -134,9 +183,17 @@ summary_race |>
 
 ```
 
-Arrest rate by race
+The distribution of searches looks similar to the distribution of stops: Black and Hispanic people make up a substantial proportion of the recorded search activity. Again, these data do not reveal the reasons behind these outcomes.
+
+However, they do show that searches — which represent a more intrusive form of police contact — occur most frequently among groups that also appear most often in stop records. For predictive policing models, this matters because such systems learn from patterns of observed enforcement, not necessarily from objective measures of risk. The result is that historical enforcement patterns become part of the model’s training environment.
+
+#### Arrest rate by race
+
+This plot looks at **arrests** among all stop-and-frisk encounters in 2024. It shows what proportion of all recorded arrests involve each race.
 
 ```{r}
+#| fig-alt: "Horizontal bar chart showing the proportion of all 2024 NYPD searches by reported suspect race"
+
 summary_race |>
   ggplot(aes(x = reorder(race, prop_arrests), y = prop_arrests)) +
   geom_col() +
@@ -149,6 +206,14 @@ summary_race |>
   )
 
 ```
+
+This plot looks at arrests following stop-and-frisk encounters. The racial distribution of arrests largely mirrors the distribution of stops and searches. As before, these data cannot tell us why arrests occur at these rates or what factors drive police decision-making.
+
+What the plot does illustrate is that recorded enforcement outcomes — the events that would form the training signal in a predictive system — are not evenly distributed across racial groups. This makes the dataset a clear example of how predictive policing models can inherit patterns present in administrative records, even when the underlying causes of those patterns are complex.
+
+#### 6. Zooming In: Arrest Rate for Black Stops
+
+To dig deeper, I subset to Black individuals only and compute the total number of stops of Black people, gow many of those stops result in arrest, and how many do not result in arrest. From there I reshape this summary to make a simple two-category plot: arrested vs not arrested
 
 ```{r}
 black_df <- sf_clean |>
@@ -175,6 +240,8 @@ black_plot <- black_df |>
 ```
 
 ```{r}
+
+#| fig-alt: "Pie chart showing the proportion of Black NYPD stops that resulted in arrest. 
 black_plot |>
   mutate(
     percent = count / sum(count)
@@ -193,22 +260,82 @@ black_plot |>
 
 ```
 
-Case 1 References
+Focusing on Black New Yorkers only, this plot shows what share of stops resulted in arrest compared to stops that did not. Most stops of Black people in 2024 did not lead to an arrest.
 
-Ballantyne, N. (2023). *The harm that data do: The case of the Allegheny Family Screening Tool*. Medium. [https://medium.com/\@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2](https://medium.com/@neilballantyne/the-harm-that-data-do-the-case-of-the-allegheny-family-screening-tool-5f9fca22e0b2)
+This does not explain why officers make stops or arrests, but it highlights a feature of the underlying data: many enforcement encounters do not result in a criminal charge. For predictive systems, this matters because such models treat all recorded stops as data points, regardless of outcome.
 
-Ho, S., & Burke, G. (2022). *An algorithm that screens for child neglect raises concerns*. Pulitzer Center. <https://pulitzercenter.org/stories/algorithm-screens-child-neglect-raises-concerns>
+The dataset therefore serves as a **microcosm** of how administrative policing data function: they document where enforcement occurs, not necessarily where risk exists. Because predictive models are trained on these records, the patterns present in them — including disparities — can be learned and reproduced by algorithmic tools.
+
+### Why this matters
+
+#### **Predictive Policing: Why Biased Administrative Data Leads to Biased Algorithmic Outputs**
+
+Predictive policing systems are often described as “data-driven tools” that forecast where crime is likely to occur or which people might be at elevated “risk.” In practice, these systems learn from exactly the kinds of administrative records I visualized above: police stops, searches, arrests, and incident reports. The underlying idea is simple, historical enforcement patterns will help forecast future ones, but the consequences are more complicated.
+
+Tools like PredPol (now Geolitica) take police-generated data (locations of arrests, reported incidents, and sometimes field stops) and feed them into statistical forecasting models designed to identify spatiotemporal clusters (NIJ Crime Solutions). The model returns small hotspot boxes on a map where officers are sent to patrol. However, as Lum & Isaac argue, the model does not discover where crime is happening, but learns patterns in the data it is given, and those data primarily reflect policing behavior rather than underlying crime patterns (Lum & Isaac, 2016).
+
+This connects directly to what the NYPD data show. Black New Yorkers constitute a disproportionately high share of 2024 stops, searches, and arrests. That doesn’t, by itself, explain why these disparities exist, but it does tell us that police databases are not neutral snapshots of crime. These administrative records are simply reflections of state behavior. If these same administrative traces form the training data for a predictive system, the model will inevitably learn that “risk” is concentrated where enforcement has historically been concentrated.
+
+Researchers have shown that this dynamic creates a feedback loop:
+
+1.  Police concentrate enforcement in particular neighborhoods or among specific groups.
+
+2.  Those encounters become the data used to train the predictive model.
+
+3.  The model “discovers” elevated risk in those same places or among those same groups.
+
+4.  Police are sent back to patrol those areas.
+
+5.  New stops and arrests reinforce the pattern, regardless of changes in underlying crime (Lum & Isaac, 2016).\
+
+A 2023 evaluation of Geolitica’s deployment in Plainfield, New Jersey found that fewer than **0.5%** of its predictions matched any reported crime—yet officers still patrolled according to the algorithm’s guidance, shaping future data regardless of predictive success (Kofman & Scheiber, 2023). Even when accuracy is low, the tool’s outputs influence institutional behavior.
+
+#### **Person-Based Prediction: When Administrative Traces Follow People**
+
+Some predictive-policing systems generate individual “risk scores” rather than geographic hotspots. Chicago’s Strategic Subject List (SSL) ranked residents based on prior arrests, prior victimization, alleged gang affiliation, and similar variables. Later assessments found that many people the SSL flagged were more likely to be arrested without being convicted, suggesting that the list increased enforcement without improving safety (Joh, 2017; Koepke, 2016).
+
+Los Angeles’s Operation LASER and its PredPol contract were ultimately ended after audits raised concerns about inconsistent data, limited transparency, and discriminatory impacts (Brennan Center for Justice, 2020).
+
+The crucial point is that these systems rely on the same kinds of administrative traces as the NYPD dataset. If roughly a quarter of stops of Black individuals result in arrests (as the pie chart above shows), those arrests become future inputs. They accumulate into risk profiles used for later prediction.
+
+#### **Ethical Stakes: Why Algorithms Amplify, Rather Than Correct, Institutional Patterns**
+
+Taken together, these findings reflect a broader ethical concern:
+
+-   The datasets used to train predictive systems already encode racialized patterns of policing.
+
+-   The model treats those historical patterns as evidence of future risk.\
+    The outputs reinforce the same institutional behaviors.
+
+From a Data Feminism perspective, predictive policing centers institutional goals—efficiency, coverage, the appearance of precision—while minimizing attention to community harms (D’Ignazio & Klein, 2020). When a model learns from stop-and-frisk data, it is not discovering objective truths about crime. It is learning the history of surveillance, and then operationalizing that history as if it were neutral.
+
+This dynamic mirrors the AFST example in Case 1. In both contexts:
+
+-   The algorithm learns from patterns of state intervention—not underlying social needs or behaviors.
+
+-   People and communities already made visible to the state become even more visible in the algorithmic risk space.
+
+-   The output reinforces the very inequalities embedded in the training data.\
+
+In that sense, predictive policing and the AFST share a common structure: neither reveals hidden insight. Instead, both systems weaponize institutional history. The NYPD data above reveal exactly how that history is recorded, and they show why any predictive tool that trains on these records will inevitably reproduce the same patterns
 
 Case 2 References:
 
-Lum, K., & Isaac, W. (2016). *To predict and serve?* **Significance, 13**(5), 14–19. Royal Statistical Society. <https://doi.org/10.1111/j.1740-9713.2016.00960.x> [[Wiley Online Library+1]{.underline}](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00960.x?utm_source=chatgpt.com){alt="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00960.x?utm_source=chatgpt.com"}
+Brennan Center for Justice. (2020). *Predictive policing today: A shared statement of concern.*
+https://www.brennancenter.org/our-work/research-reports/predictive-policing-today
 
-Joh, E. E. (2017). *Feeding the machine: Policing, crime data, & algorithms.* **William & Mary Bill of Rights Journal, 26**, 287–329. [https://scholarship.law.wm.edu/wmborj/vol26/iss2/3](https://scholarship.law.wm.edu/wmborj/vol26/iss2/3?utm_source=chatgpt.com) [[W&M Law School Scholarship Repository+2W&M Law School Scholarship Repository+2]{.underline}](https://scholarship.law.wm.edu/wmborj/vol26/iss2/3/?utm_source=chatgpt.com){alt="https://scholarship.law.wm.edu/wmborj/vol26/iss2/3/?utm_source=chatgpt.com"}
+D’Ignazio, C., & Klein, L. F. (2020). *Data Feminism*. MIT Press.
 
-Robinson, D., & Koepke, L. (2016). *Stuck in a pattern: Early evidence on “predictive policing” and civil rights.* Upturn. https://www.teamupturn.com/reports/2016/stuck-in-a-pattern [[Upturn+2Upturn+2]{.underline}](https://www.upturn.org/static/reports/2016/stuck-in-a-pattern/files/Upturn_-_Stuck_In_a_Pattern_v.1.01.pdf?utm_source=chatgpt.com){alt="https://www.upturn.org/static/reports/2016/stuck-in-a-pattern/files/Upturn_-_Stuck_In_a_Pattern_v.1.01.pdf?utm_source=chatgpt.com"}
+Joh, E. E. (2017). *Feeding the machine: Policing, crime data, & algorithms.* *William & Mary Bill of Rights Journal*, 26, 287–330.
 
-Kofman, A., & Scheiber, N. (2023, October 2). *Predictive policing software terrible at predicting crimes.* **The Markup** (with Northeastern University). [https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes](https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes?utm_source=chatgpt.com) [[The Markup+2College of Social Sciences+2]{.underline}](https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes?utm_source=chatgpt.com){alt="https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes?utm_source=chatgpt.com"}
+Kofman, A., & Scheiber, N. (2023). *Predictive policing software terrible at predicting crimes.* The Markup.
+<https://themarkup.org/prediction-bias/2023/10/02/predictive-policing-software-terrible-at-predicting-crimes>\
+**Koepke, L.** (2016). *Stuck in a pattern: Early evidence on “predictive policing” and civil rights.* Upturn.
+<https://www.teamupturn.com/reports/2016/stuck-in-a-pattern>
 
-Leadership Conference on Civil and Human Rights. (2016, August 31). *Civil rights and tech advocates sound alarm on racial bias in “predictive policing.”* [https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/](https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/?utm_source=chatgpt.com) [[Leadership Conference+2The Guardian+2]{.underline}](https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/?utm_source=chatgpt.com){alt="https://civilrights.org/2016/08/31/civil-rights-and-tech-advocates-sound-alarm-on-racial-bias-in-predictive-policing/?utm_source=chatgpt.com"}
+Lum, K., & Isaac, W. (2016). *To predict and serve?* *Significance*, 13(5), 14–19. <https://doi.org/10.1111/j.1740-9713.2016.00960.x>
 
-Wyden, R., et al. (2024, January 29). *US lawmakers tell DOJ to quit blindly funding “predictive” police tools.* **WIRED.** [https://www.wired.com/story/doj-predictive-policing-lawmakers-demand/](https://www.wired.com/story/doj-predictive-policing-lawmakers-demand/?utm_source=chatgpt.com) [[WIRED]{.underline}](https://www.wired.com/story/doj-predictive-policing-lawmakers-demand?utm_source=chatgpt.com){alt="https://www.wired.com/story/doj-predictive-policing-lawmakers-demand?utm_source=chatgpt.com"}
+National Institute of Justice. *Predictive policing evaluation—CrimeSolutions.gov.*
+<https://crimesolutions.ojp.gov>
+
+**New York City Police Department.** (2024). *Stop, Question, and Frisk Data, 2024*. NYC Open Data / NYPD Reports. <https://www.nyc.gov/site/nypd/stats/reports-analysis/stopfrisk.page>

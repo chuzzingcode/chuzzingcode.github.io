@@ -44,7 +44,7 @@ NYC Open
 library(tidyverse)
 library(readxl)
 
-sf <- read_excel("~/Downloads/sqf-2024.xlsx")
+sf <- read_excel("sqf-2024.xlsx")
 
 sf_clean <- sf |>
   mutate(

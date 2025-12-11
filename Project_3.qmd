@@ -28,7 +28,7 @@ There is no systematic difference in recognition rates between the EU Big-4 and 
 
 ### Alternative Hypothesis (H₁):
 
-The EU Big-4 have higher recognition rates, on average and in median, than Non-EU high-income asylum systems.
+The EU nations have higher recognition rates, on average and in median, than Non-EU European high-income Nations.
 
 ```{r}
 library(tidyverse)

@@ -1,5 +1,5 @@
 ---
-title: "Project 5"
+title: "Variations in Stop Trends in Oakland, San Francisco, and San Diego Along Racial Lines"
 format:
   html:
     code-fold: true        
@@ -10,13 +10,12 @@ execute:
   message: false
 ---
 
-This project seeks to interrogate 2 questions: how do traffic stop patterns differ across California cities, and how do these patterns change when we examine different types of stops within a single city? To answer these questions, I compare the racial distribution of police stops in San Diego and San Francisco, and then investigate how Oakland’s vehicular and pedestrian stops vary across racial groups.
-
 ```{r}
 library(DBI)
 library(RMariaDB)
 library(tidyverse)
 
+# Connect to the shared traffic database using credentials
 con_traffic <- dbConnect(
 RMariaDB::MariaDB(),
 dbname = "traffic",
@@ -26,24 +25,31 @@ password = Sys.getenv("TRAFFIC_PWD")
 )
 ```
 
-**Stops by Race: San Diego vs San Francisco**
+This project seeks to interrogate 2 questions: how do traffic stop patterns differ across California cities, and how do these patterns change when we examine different types of stops within a single city? To answer these questions, I compare the racial distribution of police stops in San Diego and San Francisco, and then investigate how Oakland’s vehicular and pedestrian stops vary across racial groups.
+
+#### Stops by Race: San Diego vs San Francisco
 
 The goal of this first analysis is to compare how police stops are distributed across racial groups in two major California jurisdictions, San Diego and San Francisco. Both cities report similar variables, which makes them suitable for direct comparison. By focusing on stop counts by race, this section establishes a baseline understanding of how each city’s overall traffic-stop population is composed before exploring more detailed stop characteristics in the second visualization.
+
+Here, the SQL query below pulls stop counts by recorded subject race for each city.
 
 ```{sql}
 #| connection: con_traffic
 #| output.var: race_counts_2cities
 
+
+# Count stops by race in San Diego
 SELECT
-  'San Diego' AS city,
-  subject_race,
-  COUNT(*) AS n_stops
+  'San Diego' AS city, -- label for this table
+  subject_race, -- race recorded in the stop
+  COUNT(*) AS n_stops -- number of stops per race
 FROM ca_san_diego_2020_04_01
 WHERE subject_race IN ('asian/pacific islander','black','hispanic','other','white')
 GROUP BY subject_race
 
 UNION ALL
 
+# Count stops by race in San Francisto 
 SELECT
   'San Francisco' AS city,
   subject_race,
@@ -54,10 +60,14 @@ GROUP BY subject_race
 
 ORDER BY city, subject_race;
 
+
 ```
+
+Here I use a side-by-side bar chart to compare stop counts by race across San Diego and San Francisco. Each bar represents the number of stops for a race–city combination.
 
 ```{r}
 
+#| fig-alt: "Bar chart comparing stop counts by race in San Diego and San Francisco on April 1, 2020."
 library(ggplot2)
 
 ggplot(race_counts_2cities,
@@ -71,45 +81,38 @@ ggplot(race_counts_2cities,
   ) 
 ```
 
-```{sql}
-#| connection: con_traffic
-#| output.var: oak_df
-
-SELECT
-  subject_race,
-  type,
-  COUNT(*) AS n_stops
-FROM ca_oakland_2020_04_01
-WHERE subject_race IN ('asian/pacific islander', 'black', 'hispanic', 'other', 'white')
-  AND type IN ('vehicular')
-GROUP BY subject_race, type
-ORDER BY subject_race, type;
-
-```
-
 This visualization depicts the difference in total stops between the two cities. There are a few obvious limitations, first the lack of proportionality limits the explanatory or correlative power of the visualization. However, some conclusions can be drawn about the cities. First, San Francisco consistently records a higher number of stops across all racial categories, reflecting its larger data set and larger population. In both cities, White and Asian/Pacific Islander individuals make up the largest volume of stops. Hispanic and Black individuals represent fewer total stops in both cities, though the relative ordering of racial groups remains similar between the two jurisdictions, with a curious parity between stops for Hispanics in San Diego and San Francisco. The broad similarity in ranking across cities suggests comparable demographic or enforcement patterns, although the absolute differences highlight differing levels of police activity or population size.
 
-**Vehicular vs. Pedestrian Stops by Race in Oakland**
+#### Vehicular vs. Pedestrian Stops by Race in Oakland
 
-After comparing stop patterns across two cities, the second section focuses on **differences within citites**. Oakland is one of the few cities in the data set that distinguishes stop types into 2 categories, such as **vehicular** and **pedestrian**, allowing us to examine whether different racial groups are disproportionately represented in certain kinds of stops. This provides a more detailed look at how policing practices may vary across stop types, complementing the broader cross-city comparison in Section 1.
+After comparing stop patterns across two cities, the second section focuses on differences within cities. Oakland is one of the few cities in the data set that distinguishes stop types into 2 categories, such as vehicular and pedestrian, allowing us to examine whether different racial groups are disproportionately represented in certain kinds of stops. This provides a more detailed look at how policing practices may vary across stop types, complementing the broader cross-city comparison in Section 1.
+
+The SQL query below pulls counts of stops in Oakland, broken down by subject race and stop type (vehicular vs pedestrian), again using the same five racial categories.
 
 ```{sql}
 #| connection: con_traffic
 #| output.var: oak_stops_by_type
 
+#Count Oakland stops by race and stop type (vehicular + pedestrian)
 SELECT
   subject_race,
-  type,
+  `type`, -- vehicular or pedestrians
   COUNT(*) AS n_stops
 FROM ca_oakland_2020_04_01
-WHERE subject_race IN ('asian/pacific islander','black','hispanic','other','white')
-  AND type IN ('vehicular','pedestrian')
+WHERE subject_race IN ('asian/pacific islander', 'black', 'hispanic', 'other', 'white')
+  AND type IN ('vehicular', 'pedestrian')
 GROUP BY subject_race, type
 ORDER BY subject_race, type;
 
+
 ```
 
+Here I create a bar chart showing, for each race, the number of vehicular and pedestrian stops. This helps highlight whether the composition of stops by race changes when we move from one stop type to another.
+
 ```{r}
+
+#| fig-alt: "Side-by-side bar chart showing the number of vehicular and pedestrian stops by race in Oakland
+
 library(ggplot2)
 
 ggplot(oak_stops_by_type,
@@ -128,10 +131,18 @@ ggplot(oak_stops_by_type,
 
 The first clear trend in Oakland's visualization is that vehicular stops overwhelmingly dominate pedestrian stops across all racial groups. This suggests that most of the police–public contact reported in the Stanford study occured through vehicle enforcement rather than interactions with pedestrians. Furthermore, Black residents experience the highest number of vehicular stops by a substantial margin, far exceeding all other racial groups. This stands out in contrast to the San Diego and San Francisco patterns observed before, where white and Asian/Pacific Islander groups accounted for the largest raw stop numbers. Pedestrian stops, while much smaller in volume, mirror the same general racial ordering as vehicular stops, with Black individuals again experiencing the highest number.
 
+#### Conclusion
+
+In San Diego and San Francisco, stop counts by race show similar ordering but different overall volumes. In Oakland, stop type matters, since vehicular stops dominate, and Black residents appear most often in both vehicular and pedestrian stops.
+
+Because the underlying data were constructed and studied in the Stanford Open Policing Project (Pierson et al., 2020), they also serve as an example of the kinds of administrative records that can be used to evaluate racial disparities or to train more complex statistical models. As with the AFST and predictive policing cases, the data show who appears most often in the record, not necessarily who poses the greatest risk.
+
 ```{r}
 dbDisconnect(con_traffic)
 ```
 
-References:
+References
 
-Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” *Nature Human Behaviour*, 1–10.
+Pierson, E., Simoiu, C., Overgoor, J., Corbett-Davies, S., Jenson, D., Shoemaker, A., Ramachandran, V., et al. (2020). A large-scale analysis of racial disparities in police stops across the United States. *Nature Human Behaviour*, 4, 736–745.
+
+Stanford Open Policing Project. (2020). *Traffic stop data for California jurisdictions* \[Dataset\]. <https://openpolicing.stanford.edu>
