@@ -1,21 +1,70 @@
 ---
-title: "My Second Tidy Visualization"
+title: "Federations With the Highest Population of 2000+ rated players in September 2025"
 author: "Chris Hussey"
+format:
+  html:
+    code-fold: true
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
+The September 2025 TidyTuesday dataset contains FIDE (International Chess Federation) rating lists for registered competitive chess players worldwide. Each entry includes a player’s country federation, FIDE ID, standard rating, titles, and demographic information. In this analysis, I focus on identifying which national federations have the largest number of strong tournament players, defined here as players rated **2000 or higher** in standard/classical chess.
+
 ```{r}
-# Clean data provided by Kat Correia. Student interns extracted this information
-# from reproductive medicine journals using duplicate data entry. 
-# After duplicate data entry discrepancies were resolved, their 
-# individual files were combined, and posted for public access 
-# as Google sheets, e.g.,:
-# https://docs.google.com/spreadsheets/d/1UuWGQxRU0wxVuOZGYnvkwKn-GdmLIj8kzmUm4KLRHQY/edit?gid=1719021104#gid=1719021104
-# No additional cleaning was necessary.
+library(tidytuesdayR)
+tuesdata <- tt_load('2025-09-23')
 
-article_dat <- readr::read_csv("https://kcorreia.people.amherst.edu/repro_med_disparities-article-level-data.csv")
-
-model_dat <- readr::read_csv("https://kcorreia.people.amherst.edu/repro_med_disparities-model-level-data.csv")
+fide_ratings_september <- tuesdata$fide_ratings_september #Extracts the data for September
 
 
 
 ```
+
+Here's a glimpse at what this data set is working with, contextualizing the explanation above.
+
+```{r}
+head(fide_ratings_september) #Gives us a peak into the variables of the data set
+```
+
+This is the list of Federations with the highest number of 2000+ players in descending order
+
+```{r}
+library(tidyverse)
+
+players_2000 <- fide_ratings_september |>
+  filter(!is.na(rating)) |>  # keep only players with a real rating
+  filter(rating >= 2000)     # keep only players with a rating of 2000+
+
+#This counts players per federation and extracts the top 5
+top_5_feds <- players_2000 |> 
+  count(fed, name = "n_players_2000plus", sort = TRUE) |>
+  slice_max(n_players_2000plus, n = 5)
+
+top_5_feds
+```
+
+```{r}
+#|fig-alt: "Horizontal bar chart showing the number of FIDE chess players with ratings of 2000 or higher in the five federations with the largest such populations."
+
+top_5_feds |>
+  mutate(fed = fct_reorder(fed, n_players_2000plus)) |>
+  ggplot(aes(x = fed, y = n_players_2000plus)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 5 Federations by Number of 2000+ Rated FIDE Players",
+    x     = "Federation",
+    y     = "Number of 2000+ rated players"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+This plot shows, for the September 2025 FIDE rating list, the five federations with the largest number of players rated 2000 or higher. Germany (GER) has the highest count of strong players, followed by Spain (ESP) and France (FRA), with the Netherlands (NED) and the Czech Republic (CZE) rounding out the top five. The differences in bar length indicate that Germany and Spain have substantially more 2000+ rated players than the other federations in this group, reflecting deeper pools of competitive players in those national systems. It’s important to remember that these counts come from the official FIDE ratings list at a single point in time, not from all casual chess players in each country.
+
+References:
+Original Data: International Chess Federation (FIDE). *FIDE Rating Lists – September 2025.* FIDE Ratings. Retrieved from <https://ratings.fide.com/download_lists.phtml>.
+
+Tidy Tuesday Source: R4DS Online Learning Community. (2025). *TidyTuesday: FIDE Ratings (2025-09-23).* TidyTuesday project. Retrieved from <https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-09-23/readme.md>.\
+\

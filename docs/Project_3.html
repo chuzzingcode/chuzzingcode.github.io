@@ -130,34 +130,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./tidydata1.html"> 
-<span class="menu-text">VIS 1</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-viz" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Viz</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-viz">    
+        <li>
+    <a class="dropdown-item" href="./tidydata1.html">
+ <span class="dropdown-text">Household Plumbing Access</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./tidydata2.html"> 
-<span class="menu-text">VIS 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./tidydata2.html">
+ <span class="dropdown-text">FIDE Ratings by Federation</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_2.html"> 
-<span class="menu-text">Project 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_2.html">
+ <span class="dropdown-text">Netflix Show Patterns</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./Project_3.html" aria-current="page"> 
-<span class="menu-text">Project 3</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_3.html">
+ <span class="dropdown-text">Variance in European Recognition Rates of Syrian Refugees</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_4.html"> 
-<span class="menu-text">Project 4</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_4.html">
+ <span class="dropdown-text">Project 4</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_5.html"> 
-<span class="menu-text">Project 5</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_5.html">
+ <span class="dropdown-text">Project 5</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./final_pres.html"> 
-<span class="menu-text">Final Presentation</span></a>
+        <li>
+    <a class="dropdown-item" href="./final_pres.html">
+ <span class="dropdown-text">Final Presentation</span></a>
   </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -169,11 +176,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link active" data-scroll-target="#hypotheses">Hypotheses</a>
+  <ul class="collapse">
+  <li><a href="#null-hypothesis-h₀" id="toc-null-hypothesis-h₀" class="nav-link" data-scroll-target="#null-hypothesis-h₀">Null Hypothesis (H₀):</a></li>
+  <li><a href="#alternative-hypothesis-h₁" id="toc-alternative-hypothesis-h₁" class="nav-link" data-scroll-target="#alternative-hypothesis-h₁">Alternative Hypothesis (H₁):</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -182,7 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -194,59 +211,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this project I test whether country-level recognition rates for Syrian asylum applicants differ between two European blocs: the EU Big-4 (Germany, France, Italy, Spain) and the Nordics (Sweden, Norway, Denmark). I focus on the Syrian refugees, ranging from the 2014-17 refugee crisis, to recent regional conflict, culminating in using data from 2014–2024. I compute each country’s recognition rate compare bloc means/medians, and assess significance with a permutation test.</p>
+<p>This project uses UNHCR asylum decision data (2014–2024) to investigate whether country-level recognition rates for Syrian asylum seekers differ systematically between two blocs:</p>
+<p>1) the “EU Big-4” comprised of Germany (DEU), France (FRA), Italy (ITA), Spain (ESP)</p>
+<p>2: Non-EU High-Income Nations: Norway (NOR), United Kingdom (GBR), Switzerland (CHE), Iceland (ISL)</p>
+<p>These countries, while still being European, have key differences in their asylum administrative structure, legal frameworks governing refugee protection, processing volume and bureaucratic capacity, political systems overseeing refugee policy. For this study, bloc membership is assued to represent distinct asylum-policy regimes.</p>
+<p>Thus, the research question is: Do EU Big-4 countries exhibit higher recognition rates for Syrian asylum applicants than Non-EU high-income European nations?</p>
+<section id="hypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="hypotheses">Hypotheses</h2>
+<section id="null-hypothesis-h₀" class="level3">
+<h3 class="anchored" data-anchor-id="null-hypothesis-h₀">Null Hypothesis (H₀):</h3>
+<p>There is no systematic difference in recognition rates between the EU Big-4 and the Non-EU high-income bloc. Bloc membership is unrelated to recognition-rate behavior.</p>
+</section>
+<section id="alternative-hypothesis-h₁" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-hypothesis-h₁">Alternative Hypothesis (H₁):</h3>
+<p>The EU Big-4 have higher recognition rates, on average and in median, than Non-EU high-income asylum systems.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(refugees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(refugees)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">view</span>(asylum_decisions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>This code creates a data frame that keeps the relevant EU and Nordic countries that received asylum claims from Syria between the years of 2014 and 2024. It selects the COO ISO code for Syria (“SYR”), the COA ISO codes for the EU and Nordic Blocs respectively, then calculates their recognition rates using rec_total, which summarizes the decision(whether it was through official recognition channels through UNHCR’s mandate or other forms of asylum protection, and n_total, which is the total number of applications received by a given country, and dividing rec_total by n_total. It then outputs a tibble with each asylum country, their rate, and their bloc. It also removes NAs and prevents dividing by 0 during the rate calculations. It also returns an table with the mean and median recognition rates aggregated by bloc.</p>
+<p>This code creates a data frame that keeps the relevant EU and Nordic countries that received asylum claims from Syria between the years of 2014 and 2024. It selects the COO ISO code for Syria (“SYR”), the COA ISO codes for the EU and Non - EU respectively, then calculates their recognition rates using rec_total, which summarizes the decision(whether it was through official recognition channels through UNHCR’s mandate or other forms of asylum protection, and n_total, which is the total number of applications received by a given country, and dividing rec_total by n_total. It then outputs a tibble with each asylum country, their rate, and their bloc. It also removes NAs and prevents dividing by 0 during the rate calculations. It also returns an table with the mean and median recognition rates aggregated by bloc.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># focus</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on Syrian origin cases</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>origin_sel <span class="ot">&lt;-</span> <span class="st">"SYR"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ref_slice <span class="ot">&lt;-</span> asylum_decisions<span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, coo_iso, coa_iso, dec_recognized, dec_other, dec_total)<span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(coo_iso <span class="sc">==</span> origin_sel,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         (coa_iso <span class="sc">==</span> <span class="st">"DEU"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"FRA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ITA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ESP"</span> <span class="sc">|</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          coa_iso <span class="sc">==</span> <span class="st">"SWE"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"NOR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"DNK"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(coa_iso)<span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">rec_total =</span> <span class="fu">sum</span>(dec_recognized <span class="sc">+</span> dec_other, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_total   =</span> <span class="fu">sum</span>(dec_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">rec_rate  =</span> <span class="fu">if_else</span>(n_total <span class="sc">&gt;</span> <span class="dv">0</span>, rec_total <span class="sc">/</span> n_total, <span class="cn">NA_real_</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">|&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">bloc =</span> <span class="fu">case_when</span>(</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      (coa_iso <span class="sc">==</span> <span class="st">"DEU"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"FRA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ITA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ESP"</span>) <span class="sc">~</span> <span class="st">"EU Big-4"</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      (coa_iso <span class="sc">==</span> <span class="st">"SWE"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"NOR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"DNK"</span>)                   <span class="sc">~</span> <span class="st">"Nordics"</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">|&gt;</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bloc), <span class="sc">!</span><span class="fu">is.na</span>(rec_rate))<span class="sc">|&gt;</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bloc =</span> <span class="fu">factor</span>(bloc, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"EU Big-4"</span>,<span class="st">"Nordics"</span>)))</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>ref_slice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ref_slice <span class="ot">&lt;-</span> asylum_decisions <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># keep only the variables we need</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, coo_iso, coa_iso, dec_recognized, dec_other, dec_total) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filters for Syrian origin, between 2014–2024, and the receiving countries of interest. </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    coo_iso <span class="sc">==</span> origin_sel,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (coa_iso <span class="sc">==</span> <span class="st">"DEU"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"FRA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ITA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ESP"</span> <span class="sc">|</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>     coa_iso <span class="sc">==</span> <span class="st">"NOR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"GBR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"CHE"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ISL"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(coa_iso) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># total recognitions = refugee + other protection</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">rec_total =</span> <span class="fu">sum</span>(dec_recognized <span class="sc">+</span> dec_other, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># total decisions</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_total   =</span> <span class="fu">sum</span>(dec_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if no decisions, rec_rate is NA</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">rec_rate  =</span> <span class="fu">if_else</span>(n_total <span class="sc">&gt;</span> <span class="dv">0</span>, rec_total <span class="sc">/</span> n_total, <span class="cn">NA_real_</span>),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups   =</span> <span class="st">"drop"</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assign each country to a bloc using the new definition</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">bloc =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      (coa_iso <span class="sc">==</span> <span class="st">"DEU"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"FRA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ITA"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ESP"</span>) <span class="sc">~</span> <span class="st">"EU Big-4"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>      (coa_iso <span class="sc">==</span> <span class="st">"NOR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"GBR"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"CHE"</span> <span class="sc">|</span> coa_iso <span class="sc">==</span> <span class="st">"ISL"</span>) <span class="sc">~</span> <span class="st">"Non-EU High-Income"</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># keep only rows with a valid bloc and recognition rate</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bloc), <span class="sc">!</span><span class="fu">is.na</span>(rec_rate)) <span class="sc">|&gt;</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set bloc as an ordered factor for plotting</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bloc =</span> <span class="fu">factor</span>(bloc, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"EU Big-4"</span>, <span class="st">"Non-EU High-Income"</span>)))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>ref_slice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 5
-  coa_iso rec_total n_total rec_rate bloc    
-  &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   
-1 DEU        918795 1147929    0.800 EU Big-4
-2 DNK         18343   19321    0.949 Nordics 
-3 ESP         19225   22570    0.852 EU Big-4
-4 FRA         36636   43479    0.843 EU Big-4
-5 ITA          4382    5442    0.805 EU Big-4
-6 NOR         16831   21407    0.786 Nordics 
-7 SWE         95822  117367    0.816 Nordics </code></pre>
+<pre><code># A tibble: 8 × 5
+  coa_iso rec_total n_total rec_rate bloc              
+  &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;             
+1 CHE         20959   24875    0.843 Non-EU High-Income
+2 DEU        918795 1147929    0.800 EU Big-4          
+3 ESP         19225   22570    0.852 EU Big-4          
+4 FRA         36636   43479    0.843 EU Big-4          
+5 GBR         21066   23888    0.882 Non-EU High-Income
+6 ISL           290     605    0.479 Non-EU High-Income
+7 ITA          4382    5442    0.805 EU Big-4          
+8 NOR         16831   21407    0.786 Non-EU High-Income</code></pre>
 </div>
 </div>
-<p>The below code provides the aggregate median and average recognition rates between EU and Nordic countries.</p>
+<p>The below code provides the aggregate median and average recognition rates between the EU and Non-EU countries.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -263,13 +311,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  bloc     mean_rate median_rate n_countries
-  &lt;fct&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;int&gt;
-1 EU Big-4     0.825       0.824           4
-2 Nordics      0.851       0.816           3</code></pre>
+  bloc               mean_rate median_rate n_countries
+  &lt;fct&gt;                  &lt;dbl&gt;       &lt;dbl&gt;       &lt;int&gt;
+1 EU Big-4               0.825       0.824           4
+2 Non-EU High-Income     0.748       0.814           4</code></pre>
 </div>
 </div>
-<p>This plot compares <strong>country-level recognition rates</strong> for Syrian applicants across the <strong>EU Big-4</strong> and the <strong>Nordics</strong>. The central lines (medians) are close, and the boxes/whiskers overlap substantially. Within the Nordics there’s visibly more dispersion, but the EU Big-4 are <strong>tighter with lower-variance</strong>. Visually, any bloc gap looks <strong>small relative to country-to-country variation</strong>.</p>
+<p>Aggregating by bloc, the EU Big-4 have a slightly higher mean recognition rate (0.83 vs 0.75), while the medians are very close (0.824 for the EU Big-4 and 0.814 for the Non-EU High-Income group). The lower mean for the Non-EU group is driven in part by Iceland’s much lower recognition rate (~0.48), while Switzerland, the UK, and Norway are clustered in the same general range as the EU Big-4 countries. So even before doing a formal test, the table suggests only a modest bloc difference.</p>
+<hr>
+<p>This boxplot compares country-level recognition rates for Syrian applicants across the EU Big-4 and the Non-EU High-Income bloc, with each point representing one country’s pooled rate from 2014–2024.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -285,15 +335,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project_3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project_3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Boxplot comparing recognition rates for Syrian asylum applicants across EU Big-4 and Non-EU High-Income Nations" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Based on this data, My research question would be, do the Nordic countries on average and on median have a lower recognition rate than the EU big 4 for Syrian Refugees?</p>
-<p>My Null hypothesis would be there is no difference in the average or median recognition rate between Nordic and Big 4 EU countries.</p>
-<p>My alternative hypothesis is that EU big 4 countries have a higher median and average recognition rate than Nordic countries.</p>
-<p>I used the below function to randomly assign data points to each country in the study. The null hypothesis would assume that the random assignment should produce test statistics similar to the observed statistics!</p>
+<p>The EU Big-4 are tightly clustered, all around 0.80–0.85, which produces a narrow box and short whiskers. The Non-EU High-Income group shows much more spread: Switzerland and the UK sit near the top of the distribution, Norway is slightly lower, and Iceland stands out as a clear low-recognition outlier. As a result, the Non-EU box is taller and its whiskers extend further down. The medians of the two blocs are relatively similar, and the boxes overlap substantially, which suggests that any bloc-level gap is small relative to the differences between individual countries within each group.</p>
+<hr>
+<p>The permutation function below takes the observed recognition rates, randomly reassigns them to the two blocs under the null hypothesis of no bloc effect, and computes the mean and median differences for each permuted dataset. Mapping this function over many iterations (here, 5,000) produces the null distributions we compare against the observed gap. This allows us to evaluate how extreme the real-world difference is relative to what would occur by chance alone.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -314,65 +363,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>I will generate 500 simulated null data sets to show the distribution of permuted mean and median differences on a histogram. A red line will show the observed mean and median differences in the original data set.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">47</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>perm_stats <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>), perm_data, <span class="at">data =</span> ref_slice) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>perm_stats <span class="sc">|&gt;</span> </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_ave_diff)) <span class="sc">+</span> </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> obs_ave_diff), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Project_3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
-</div>
+<div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>perm_stats <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_med_diff)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_ave_diff)) <span class="sc">+</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> obs_med_diff), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> obs_ave_diff), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project_3_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project_3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" alt="Histogram of permuted mean differences with observed mean difference marked in red." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Due to the red line’s proximity to the center of the distribution in both, it seems the data has failed to reject the null hypothesis. This means it is likely there is not a significant difference between the observed values and the expected difference To verify there is no real difference, the below data will provide the P-value.</p>
+<p>The permutation distribution for the mean difference exhibits several peaks, again reflecting the discrete nature of the statistic when only eight observations are available. The red line marks the observed mean difference between blocs (EU Big-4 minus Non-EU High-Income). The red line lies inside the main body of the null distribution, which indicates that the observed difference in mean recognition rates is not extreme relative to what we would expect if the recognition rates were randomly assigned to either bloc.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>perm_stats <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_val_ave =</span> <span class="fu">mean</span>(perm_ave_diff <span class="sc">&gt;</span> obs_ave_diff),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_val_med =</span> <span class="fu">mean</span>(perm_med_diff <span class="sc">&gt;</span> obs_med_diff))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> perm_med_diff)) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> obs_med_diff), <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" alt="Histogram of permuted median differences with observed median difference marked in red." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The permutation distribution for the median difference displays three distinct clusters. This occurs because the dataset contains only eight countries, so there are only a limited number of possible median differences when randomly redistributing these eight recognition rates into two groups of four. The red vertical line marks the observed median difference from the real data, which is slightly negative. Its position falls near the center cluster of the permutation distribution rather than in one of the tails. This means that the observed median gap is entirely consistent with what would be expected purely by chance if bloc membership had no true effect on recognition rates. In other words, the observed median difference is not unusually large or small in the context of the null model. This visual inspection suggests that we should fail to reject the null hypothesis for the median.</p>
+<hr>
+<p>Across 2014–2024, the permutation test produces a mean-difference p-value of 0.708 and a median-difference p-value of 0.726. These values indicate that over 70% of the permuted datasets produced bloc differences as large as or larger than the one observed in the real data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>perm_stats <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_val_ave =</span> <span class="fu">mean</span>(perm_ave_diff <span class="sc">&gt;</span> obs_ave_diff),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_val_med =</span> <span class="fu">mean</span>(perm_med_diff <span class="sc">&gt;</span> obs_med_diff))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   p_val_ave p_val_med
       &lt;dbl&gt;     &lt;dbl&gt;
-1     0.350     0.436</code></pre>
+1     0.674     0.712</code></pre>
 </div>
 </div>
-<p>Across 2014–2024, we <strong>fail to reject the null hypothesis.</strong> the EU Big-4 and Nordics do <strong>not</strong> exhibit a statistically detectable difference in country-level recognition rates for Syrian applicants when comparing bloc means/medians. The P-value signifies the likelihood that an observed result is due to random chance. Below, we see a P value for the average recognition rate of 34%, and for the median it is 43%. This means that there is a respective chance of 34% or 43% that the observed result is due to a random occurrence, and thus not enough to reject the null hypothesis</p>
-<p>Sources:</p>
-<p>UNHCR <strong><code>refugees</code></strong> R package — overview &amp; install guide:<br>
+<p>Because these p-values are so high, the observed differences fall squarely within what we would expect purely by chance if bloc membership (EU Big-4 vs.&nbsp;Non-EU High-Income) had no real effect on recognition rates.</p>
+<p>Conclusion:<br>
 </p>
+<p>We fail to reject the null hypothesis. There is no statistically detectable difference in Syrian asylum recognition rates between the EU Big-4 and the Non-EU High-Income countries. The observed bloc differences are small, unstable, and entirely compatible with random variation arising from having only eight countries in the comparison.</p>
+<p>Overall, this project followed the workflow of a formal permutation-based inference study. I began by defining meaningful policy blocs, computing country-level recognition rates, and visualizing bloc differences. I then constructed a simulation-based null model and generated 5,000 permuted data sets to form the distribution for mean and median differences. Comparing the observed statistics to these null distributions allowed me to draw population conclusions about bloc-level asylum recognition patterns.</p>
+<p>Sources:</p>
+<p>UNHCR <code>refugees</code> R package — overview &amp; install guide:</p>
 <p><a href="https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html?utm_source=chatgpt.com">https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html</a></p>
+<p>Original Source: NHCR Asylum Decisions Dataset (Original Source).<br>
+United Nations High Commissioner for Refugees (UNHCR). Refugee Status Determination and Decisions Data, 2014–2024. Retrieved from <a href="https://www.unhcr.org/refugee-statistics/" class="uri">https://www.unhcr.org/refugee-statistics/</a></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

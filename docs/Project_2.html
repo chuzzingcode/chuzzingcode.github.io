@@ -131,34 +131,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./tidydata1.html"> 
-<span class="menu-text">VIS 1</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-viz" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Viz</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-viz">    
+        <li>
+    <a class="dropdown-item" href="./tidydata1.html">
+ <span class="dropdown-text">Household Plumbing Access</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./tidydata2.html"> 
-<span class="menu-text">VIS 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./tidydata2.html">
+ <span class="dropdown-text">FIDE Ratings by Federation</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./Project_2.html" aria-current="page"> 
-<span class="menu-text">Project 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_2.html">
+ <span class="dropdown-text">Netflix Show Patterns</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_3.html"> 
-<span class="menu-text">Project 3</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_3.html">
+ <span class="dropdown-text">Variance in European Recognition Rates of Syrian Refugees</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_4.html"> 
-<span class="menu-text">Project 4</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_4.html">
+ <span class="dropdown-text">Project 4</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_5.html"> 
-<span class="menu-text">Project 5</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_5.html">
+ <span class="dropdown-text">Project 5</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./final_pres.html"> 
-<span class="menu-text">Final Presentation</span></a>
+        <li>
+    <a class="dropdown-item" href="./final_pres.html">
+ <span class="dropdown-text">Final Presentation</span></a>
   </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -201,9 +208,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This page looks at the TidyTuesday Netflix Titles dataset from 2021-04-20, which includes metadata and short descriptions for movies and TV shows. In my plots, I compare movie runtimes by decade and title lengths across shows in the data set.</p>
+<p>This project looks at the TidyTuesday Netflix Titles dataset from 2021-04-20, which includes metadata and short descriptions for movies and TV shows. In my plots, I compare movie runtimes by decade and title lengths across shows in the data set.</p>
+<p>My analysis focuses on three small exploratory tasks:</p>
+<ol type="1">
+<li><p><strong>Comparing movie runtimes across decades</strong></p></li>
+<li><p><strong>Examining the distribution of title lengths</strong></p></li>
+<li><p><strong>Exploring the number of seasons in Netflix TV shows</strong></p></li>
+</ol>
 <section id="section" class="level5">
 <h5 class="anchored" data-anchor-id="section"></h5>
+<p>The cleaned data set contains the type (movie or tv show), it’s title, the date it was added to the platform, when it originally released, its duration in seasons or minutes, and a description of the plot.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -211,11 +225,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>netflix <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>netflix <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing irrelevant columns &amp; creating a decade variable</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>clean_data <span class="ot">&lt;-</span> netflix <span class="sc">|&gt;</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, title, date_added, release_year, duration, description) <span class="sc">|&gt;</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -223,56 +237,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">description =</span> <span class="fu">str_squish</span>(description),</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">decade      =</span> (release_year <span class="sc">%/%</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="dv">10</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="ot">&lt;-</span> clean_data <span class="sc">|&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">minutes =</span> <span class="fu">as.integer</span>(<span class="fu">str_extract</span>(duration, <span class="st">"(?&lt;=^)</span><span class="sc">\\</span><span class="st">d+(?=</span><span class="sc">\\</span><span class="st">s*min$)"</span>)),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasons =</span> <span class="fu">as.integer</span>(<span class="fu">str_extract</span>(duration, <span class="st">"(?&lt;=^)</span><span class="sc">\\</span><span class="st">d+(?=</span><span class="sc">\\</span><span class="st">s*Season(?:s)?$)"</span>))</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clean_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  type    title date_added        release_year duration  description      decade
+  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;
+1 TV Show 3%    August 14, 2020           2020 4 Seasons In a future whe…   2020
+2 Movie   7:19  December 23, 2016         2016 93 min    After a devasta…   2010
+3 Movie   23:59 December 20, 2018         2011 78 min    When an army re…   2010
+4 Movie   9     November 16, 2017         2009 80 min    In a postapocal…   2000
+5 Movie   21    January 1, 2020           2008 123 min   A brilliant gro…   2000
+6 TV Show 46    July 1, 2017              2016 1 Season  A genetics prof…   2010</code></pre>
+</div>
+</div>
+<p>The duration column in the original dataset is stored as text, with movies coded like “95 min” and TV shows coded like “3 seasons” . To analyze runtimes and season counts numerically, I use regular expressions to pull out just the digits at the beginning of these strings. For movies, I look for a number followed by “min” and convert it to a minutes variable. For TV shows, I look for a number followed by “Season” or “Seasons” or and convert it to a seasons variable. This lets me treat runtimes and season counts as numbers.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Regex parses runtimes</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="ot">&lt;-</span> clean_data <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>     <span class="co"># Movies store duration in minutes</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">minutes =</span> <span class="fu">as.integer</span>(<span class="fu">str_extract</span>(duration, <span class="st">"(?&lt;=^)</span><span class="sc">\\</span><span class="st">d+(?=</span><span class="sc">\\</span><span class="st">s*min$)"</span>)),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># TV Shows store seasons</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasons =</span> <span class="fu">as.integer</span>(<span class="fu">str_extract</span>(duration, <span class="st">"(?&lt;=^)</span><span class="sc">\\</span><span class="st">d+(?=</span><span class="sc">\\</span><span class="st">s*Season(?:s)?$)"</span>)) </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"Movie"</span>, <span class="sc">!</span><span class="fu">is.na</span>(minutes), <span class="sc">!</span><span class="fu">is.na</span>(decade)) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decade =</span> <span class="fu">as.character</span>(decade)) <span class="sc">|&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> minutes, <span class="at">fill =</span> decade)) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Movie runtime distributions by decade"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Runtime (minutes)"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Decade"</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Project_2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Each curve on this plot shows the distribution of Netflix movie runtimes for each decade represented since the 40s. The higher peaks show the most common lengths for that decade. What we see in this plot are the changes across time for what a typical runtime looks like in each era, with the peaks showing what the most frequent lengths were for a given decade.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">title_words =</span> title <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_count</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">S+"</span>)         </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(title_words)) <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> title_words)) <span class="sc">+</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">center =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How long are Netflix titles?"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Histogram of the number of words per title"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Words in title"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of titles"</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Density curves comparing the distribution of movie runtimes across release decades, showing differences in typical runtime length over time."</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"Movie"</span>, <span class="sc">!</span><span class="fu">is.na</span>(minutes), <span class="sc">!</span><span class="fu">is.na</span>(decade)) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decade =</span> <span class="fu">as.character</span>(decade)) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> minutes, <span class="at">fill =</span> decade)) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Movie runtime distributions by decade"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Runtime (minutes)"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Decade"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -282,27 +292,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Each bar on this plot shows how many Netflix titles have a given number of words in their names. Taller bars mark the most common title lengths. What we see is that short, punchy names (around 1–3 words) are most frequent, with a tapering tail of longer titles that tend to appear less often.</p>
+<p>Each curve on this plot shows the distribution of Netflix movie runtimes for each decade represented since the 40s. The higher peaks show the most common lengths for that decade. What we see in this plot are the changes across time for what a typical runtime looks like in each era, with the peaks showing what the most frequent lengths were for a given decade.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"TV Show"</span>, <span class="sc">!</span><span class="fu">is.na</span>(seasons), seasons <span class="sc">&lt;=</span> <span class="dv">11</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(seasons, <span class="at">sort =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">seasons =</span> <span class="fu">factor</span>(seasons, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(seasons)))) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> seasons, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How many seasons do Netflix TV shows have?"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Counts of TV shows by stated season count (shows with &gt;11 seasons excluded)"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Seasons"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of TV shows"</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">title_words =</span> title <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_count</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">S+"</span>)  <span class="co"># count non-space sequences         </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(title_words)) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> title_words)) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">center =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How long are Netflix titles?"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Histogram of the number of words per title"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Words in title"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of titles"</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Project_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Bar chart showing how many Netflix titles contain 1, 2, 3, or more words, illustrating that short titles are most common." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Each bar on this plot shows how many Netflix titles have a given number of words in their names. Taller bars mark the most common title lengths. What we see is that short, punchy names (around 1–3 words) are most frequent, with a tapering tail of longer titles that tend to appear less often.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>parsed_data <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"TV Show"</span>, <span class="sc">!</span><span class="fu">is.na</span>(seasons), seasons <span class="sc">&lt;=</span> <span class="dv">11</span>) <span class="sc">|&gt;</span> <span class="co"># limit outliers</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(seasons, <span class="at">sort =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">seasons =</span> <span class="fu">factor</span>(seasons, <span class="at">levels =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(seasons)))) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> seasons, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How many seasons do Netflix TV shows have?"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Counts of TV shows by stated season count (shows with &gt;11 seasons excluded)"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Seasons"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of TV shows"</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="Bar chart showing how many Netflix titles contain 1, 2, 3, or more words, illustrating that short titles are most common." width="672"></p>
 </figure>
 </div>
 </div>

@@ -10,47 +10,83 @@ execute:
   message: false
 ---
 
-In this project I test whether country-level recognition rates for Syrian asylum applicants differ between two European blocs: the EU Big-4 (Germany, France, Italy, Spain) and the Nordics (Sweden, Norway, Denmark). I focus on the Syrian refugees, ranging from the 2014-17 refugee crisis, to recent regional conflict, culminating in using data from 2014–2024. I compute each country’s recognition rate compare bloc means/medians, and assess significance with a permutation test.
+This project uses UNHCR asylum decision data (2014–2024) to investigate whether country-level recognition rates for Syrian asylum seekers differ systematically between two blocs:
+
+1\) the "EU Big-4" comprised of Germany (DEU), France (FRA), Italy (ITA), Spain (ESP)
+
+2: Non-EU High-Income Nations: Norway (NOR), United Kingdom (GBR), Switzerland (CHE), Iceland (ISL)
+
+These countries, while still being European, have key differences in their asylum administrative structure, legal frameworks governing refugee protection, processing volume and bureaucratic capacity, political systems overseeing refugee policy. For this study, bloc membership is assued to represent distinct asylum-policy regimes.
+
+Thus, the research question is: Do EU Big-4 countries exhibit higher recognition rates for Syrian asylum applicants than Non-EU high-income European nations?
+
+## Hypotheses
+
+### Null Hypothesis (H₀):
+
+There is no systematic difference in recognition rates between the EU Big-4 and the Non-EU high-income bloc. Bloc membership is unrelated to recognition-rate behavior.
+
+### Alternative Hypothesis (H₁):
+
+The EU Big-4 have higher recognition rates, on average and in median, than Non-EU high-income asylum systems.
 
 ```{r}
 library(tidyverse)
 library(refugees)
+view(asylum_decisions)
 
 ```
 
-This code creates a data frame that keeps the relevant EU and Nordic countries that received asylum claims from Syria between the years of 2014 and 2024. It selects the COO ISO code for Syria ("SYR"), the COA ISO codes for the EU and Nordic Blocs respectively, then calculates their recognition rates using rec_total, which summarizes the decision(whether it was through official recognition channels through UNHCR's mandate or other forms of asylum protection, and n_total, which is the total number of applications received by a given country, and dividing rec_total by n_total. It then outputs a tibble with each asylum country, their rate, and their bloc. It also removes NAs and prevents dividing by 0 during the rate calculations. It also returns an table with the mean and median recognition rates aggregated by bloc.
+This code creates a data frame that keeps the relevant EU and Nordic countries that received asylum claims from Syria between the years of 2014 and 2024. It selects the COO ISO code for Syria ("SYR"), the COA ISO codes for the EU and Non - EU respectively, then calculates their recognition rates using rec_total, which summarizes the decision(whether it was through official recognition channels through UNHCR's mandate or other forms of asylum protection, and n_total, which is the total number of applications received by a given country, and dividing rec_total by n_total. It then outputs a tibble with each asylum country, their rate, and their bloc. It also removes NAs and prevents dividing by 0 during the rate calculations. It also returns an table with the mean and median recognition rates aggregated by bloc.
 
 ```{r}
-# focus
+# Focus on Syrian origin cases
 origin_sel <- "SYR"
 
-ref_slice <- asylum_decisions|>
-  select(year, coo_iso, coa_iso, dec_recognized, dec_other, dec_total)|>
-  filter(coo_iso == origin_sel,
-         year >= 2014, year <= 2024,
-         (coa_iso == "DEU" | coa_iso == "FRA" | coa_iso == "ITA" | coa_iso == "ESP" |
-          coa_iso == "SWE" | coa_iso == "NOR" | coa_iso == "DNK"))|>
-  group_by(coa_iso)|>
+ref_slice <- asylum_decisions |>
+  # keep only the variables we need
+  
+  select(year, coo_iso, coa_iso, dec_recognized, dec_other, dec_total) |>
+  
+  # filters for Syrian origin, between 2014–2024, and the receiving countries of interest. 
+  filter(
+    coo_iso == origin_sel,
+    year >= 2014, year <= 2024,
+    (coa_iso == "DEU" | coa_iso == "FRA" | coa_iso == "ITA" | coa_iso == "ESP" |
+     coa_iso == "NOR" | coa_iso == "GBR" | coa_iso == "CHE" | coa_iso == "ISL")
+  ) |>
+  group_by(coa_iso) |>
   summarise(
+    
+    # total recognitions = refugee + other protection
     rec_total = sum(dec_recognized + dec_other, na.rm = TRUE),
+    
+    # total decisions
     n_total   = sum(dec_total, na.rm = TRUE),
+    
+    # if no decisions, rec_rate is NA
     rec_rate  = if_else(n_total > 0, rec_total / n_total, NA_real_),
-  )|>
-    mutate(
+    .groups   = "drop"
+  ) |>
+  mutate(
+    # assign each country to a bloc using the new definition
     bloc = case_when(
       (coa_iso == "DEU" | coa_iso == "FRA" | coa_iso == "ITA" | coa_iso == "ESP") ~ "EU Big-4",
-      (coa_iso == "SWE" | coa_iso == "NOR" | coa_iso == "DNK")                   ~ "Nordics",
+      (coa_iso == "NOR" | coa_iso == "GBR" | coa_iso == "CHE" | coa_iso == "ISL") ~ "Non-EU High-Income",
       TRUE ~ NA_character_
     )
-  )|>
-  filter(!is.na(bloc), !is.na(rec_rate))|>
-  mutate(bloc = factor(bloc, levels = c("EU Big-4","Nordics")))
+  ) |>
+  # keep only rows with a valid bloc and recognition rate
+  filter(!is.na(bloc), !is.na(rec_rate)) |>
+  # set bloc as an ordered factor for plotting
+  mutate(bloc = factor(bloc, levels = c("EU Big-4", "Non-EU High-Income")))
 
 ref_slice
 
+
 ```
 
-The below code provides the aggregate median and average recognition rates between EU and Nordic countries.
+The below code provides the aggregate median and average recognition rates between the EU and Non-EU countries.
 
 ```{r}
 bloc_avgs_unweighted <- ref_slice |>
@@ -66,9 +102,14 @@ bloc_avgs_unweighted
 
 ```
 
-This plot compares **country-level recognition rates** for Syrian applicants across the **EU Big-4** and the **Nordics**. The central lines (medians) are close, and the boxes/whiskers overlap substantially. Within the Nordics there’s visibly more dispersion, but the EU Big-4 are **tighter with lower-variance**. Visually, any bloc gap looks **small relative to country-to-country variation**.
+Aggregating by bloc, the EU Big-4 have a slightly higher mean recognition rate (0.83 vs 0.75), while the medians are very close (0.824 for the EU Big-4 and 0.814 for the Non-EU High-Income group). The lower mean for the Non-EU group is driven in part by Iceland’s much lower recognition rate (\~0.48), while Switzerland, the UK, and Norway are clustered in the same general range as the EU Big-4 countries. So even before doing a formal test, the table suggests only a modest bloc difference.
+
+---
+
+This boxplot compares country-level recognition rates for Syrian applicants across the EU Big-4 and the Non-EU High-Income bloc, with each point representing one country’s pooled rate from 2014–2024.
 
 ```{r}
+#| fig-alt: "Boxplot comparing recognition rates for Syrian asylum applicants across EU Big-4 and Non-EU High-Income Nations"
 
 ggplot(ref_slice, aes(x = bloc, y = rec_rate)) +
   geom_boxplot() +
@@ -82,13 +123,11 @@ ggplot(ref_slice, aes(x = bloc, y = rec_rate)) +
 
 ```
 
-Based on this data, My research question would be, do the Nordic countries on average and on median have a lower recognition rate than the EU big 4 for Syrian Refugees?
+The EU Big-4 are tightly clustered, all around 0.80–0.85, which produces a narrow box and short whiskers. The Non-EU High-Income group shows much more spread: Switzerland and the UK sit near the top of the distribution, Norway is slightly lower, and Iceland stands out as a clear low-recognition outlier. As a result, the Non-EU box is taller and its whiskers extend further down. The medians of the two blocs are relatively similar, and the boxes overlap substantially, which suggests that any bloc-level gap is small relative to the differences between individual countries within each group.
 
-My Null hypothesis would be there is no difference in the average or median recognition rate between Nordic and Big 4 EU countries.
+---
 
-My alternative hypothesis is that EU big 4 countries have a higher median and average recognition rate than Nordic countries.
-
-I used the below function to randomly assign data points to each country in the study. The null hypothesis would assume that the random assignment should produce test statistics similar to the observed statistics!
+The permutation function below takes the observed recognition rates, randomly reassigns them to the two blocs under the null hypothesis of no bloc effect, and computes the mean and median differences for each permuted dataset. Mapping this function over many iterations (here, 5,000) produces the null distributions we compare against the observed gap. This allows us to evaluate how extreme the real-world difference is relative to what would occur by chance alone.
 
 ```{r}
   perm_data <- function(rep, data){
@@ -109,8 +148,6 @@ I used the below function to randomly assign data points to each country in the 
   
 ```
 
-I will generate 500 simulated null data sets to show the distribution of permuted mean and median differences on a histogram. A red line will show the observed mean and median differences in the original data set.
-
 ```{r}
 set.seed(47)
 
@@ -118,10 +155,21 @@ perm_stats <- map(c(1:5000), perm_data, data = ref_slice) |>
   list_rbind()
 
 
+```
+
+```{r}
+#| fig-alt: "Histogram of permuted mean differences with observed mean difference marked in red."
 perm_stats |> 
   ggplot(aes(x = perm_ave_diff)) + 
   geom_histogram() + 
   geom_vline(aes(xintercept = obs_ave_diff), color = "red")
+
+```
+
+The permutation distribution for the mean difference exhibits several peaks, again reflecting the discrete nature of the statistic when only eight observations are available. The red line marks the observed mean difference between blocs (EU Big-4 minus Non-EU High-Income). The red line lies inside the main body of the null distribution, which indicates that the observed difference in mean recognition rates is not extreme relative to what we would expect if the recognition rates were randomly assigned to either bloc.
+
+```{r}
+#| fig-alt: "Histogram of permuted median differences with observed median difference marked in red."
 
 perm_stats |> 
   ggplot(aes(x = perm_med_diff)) + 
@@ -129,7 +177,12 @@ perm_stats |>
   geom_vline(aes(xintercept = obs_med_diff), color = "red")
 ```
 
-Due to the red line's proximity to the center of the distribution in both, it seems the data has failed to reject the null hypothesis. This means it is likely there is not a significant difference between the observed values and the expected difference To verify there is no real difference, the below data will provide the P-value.
+The permutation distribution for the median difference displays three distinct clusters. This occurs because the dataset contains only eight countries, so there are only a limited number of possible median differences when randomly redistributing these eight recognition rates into two groups of four.
+The red vertical line marks the observed median difference from the real data, which is slightly negative. Its position falls near the center cluster of the permutation distribution rather than in one of the tails. This means that the observed median gap is entirely consistent with what would be expected purely by chance if bloc membership had no true effect on recognition rates. In other words, the observed median difference is not unusually large or small in the context of the null model. This visual inspection suggests that we should fail to reject the null hypothesis for the median.
+
+---
+
+Across 2014–2024, the permutation test produces a mean-difference p-value of 0.708 and a median-difference p-value of 0.726. These values indicate that over 70% of the permuted datasets produced bloc differences as large as or larger than the one observed in the real data.
 
 ```{r}
 perm_stats |> 
@@ -137,10 +190,19 @@ perm_stats |>
             p_val_med = mean(perm_med_diff > obs_med_diff))
 ```
 
-Across 2014–2024, we **fail to reject the null hypothesis.** the EU Big-4 and Nordics do **not** exhibit a statistically detectable difference in country-level recognition rates for Syrian applicants when comparing bloc means/medians. The P-value signifies the likelihood that an observed result is due to random chance. Below, we see a P value for the average recognition rate of 34%, and for the median it is 43%. This means that there is a respective chance of 34% or 43% that the observed result is due to a random occurrence, and thus not enough to reject the null hypothesis
+Because these p-values are so high, the observed differences fall squarely within what we would expect purely by chance if bloc membership (EU Big-4 vs. Non-EU High-Income) had no real effect on recognition rates.
+
+Conclusion:\
+
+We fail to reject the null hypothesis. There is no statistically detectable difference in Syrian asylum recognition rates between the EU Big-4 and the Non-EU High-Income countries. The observed bloc differences are small, unstable, and entirely compatible with random variation arising from having only eight countries in the comparison.
+
+Overall, this project followed the workflow of a formal permutation-based inference study. I began by defining meaningful policy blocs, computing country-level recognition rates, and visualizing bloc differences. I then constructed a simulation-based null model and generated 5,000 permuted data sets to form the distribution for mean and median differences. Comparing the observed statistics to these null distributions allowed me to draw population conclusions about bloc-level asylum recognition patterns.
 
 Sources:
 
-UNHCR **`refugees`** R package — overview & install guide:\
+UNHCR `refugees` R package — overview & install guide:
 
 [https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html](https://www.unhcr.org/refugee-statistics/insights/explainers/refugees-r-package.html?utm_source=chatgpt.com)
+
+Original Source: NHCR Asylum Decisions Dataset (Original Source).\
+United Nations High Commissioner for Refugees (UNHCR). Refugee Status Determination and Decisions Data, 2014–2024. Retrieved from <https://www.unhcr.org/refugee-statistics/>

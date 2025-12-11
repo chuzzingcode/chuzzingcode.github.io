@@ -8,7 +8,7 @@
 
 <meta name="author" content="Chris Hussey">
 
-<title>Lack of Complete Indoor Plumbing: 2023 vs 2022 – Christopher Hussey</title>
+<title>Changes in Household Plumbing Access, 2022–2023 – Christopher Hussey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -97,34 +131,41 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./tidydata1.html" aria-current="page"> 
-<span class="menu-text">VIS 1</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-viz" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Viz</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-viz">    
+        <li>
+    <a class="dropdown-item" href="./tidydata1.html">
+ <span class="dropdown-text">Household Plumbing Access</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./tidydata2.html"> 
-<span class="menu-text">VIS 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./tidydata2.html">
+ <span class="dropdown-text">FIDE Ratings by Federation</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_2.html"> 
-<span class="menu-text">Project 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_2.html">
+ <span class="dropdown-text">Netflix Show Patterns</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_3.html"> 
-<span class="menu-text">Project 3</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_3.html">
+ <span class="dropdown-text">Variance in European Recognition Rates of Syrian Refugees</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_4.html"> 
-<span class="menu-text">Project 4</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_4.html">
+ <span class="dropdown-text">Project 4</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Project_5.html"> 
-<span class="menu-text">Project 5</span></a>
+        <li>
+    <a class="dropdown-item" href="./Project_5.html">
+ <span class="dropdown-text">Project 5</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./final_pres.html"> 
-<span class="menu-text">Final Presentation</span></a>
+        <li>
+    <a class="dropdown-item" href="./final_pres.html">
+ <span class="dropdown-text">Final Presentation</span></a>
   </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -136,26 +177,20 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#this-data-set-came-from-the-u.s.-census-bureaus-american-community-survey-acs-for-2022-and-2023.-it-tracks-county-level-population-and-the-share-of-households-without-complete-plumbing-letting-us-see-how-access-to-basic-facilities-has-changed-over-time." id="toc-this-data-set-came-from-the-u.s.-census-bureaus-american-community-survey-acs-for-2022-and-2023.-it-tracks-county-level-population-and-the-share-of-households-without-complete-plumbing-letting-us-see-how-access-to-basic-facilities-has-changed-over-time." class="nav-link active" data-scroll-target="#this-data-set-came-from-the-u.s.-census-bureaus-american-community-survey-acs-for-2022-and-2023.-it-tracks-county-level-population-and-the-share-of-households-without-complete-plumbing-letting-us-see-how-access-to-basic-facilities-has-changed-over-time.">This data set came from the U.S. Census Bureau’s American Community Survey (ACS) for 2022 and 2023. It tracks county-level population and the share of households without complete plumbing, letting us see how access to basic facilities has changed over time.</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lack of Complete Indoor Plumbing: 2023 vs 2022</h1>
+<h1 class="title">Changes in Household Plumbing Access, 2022–2023</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-page">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -173,23 +208,158 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="this-data-set-came-from-the-u.s.-census-bureaus-american-community-survey-acs-for-2022-and-2023.-it-tracks-county-level-population-and-the-share-of-households-without-complete-plumbing-letting-us-see-how-access-to-basic-facilities-has-changed-over-time." class="level2">
-<h2 class="anchored" data-anchor-id="this-data-set-came-from-the-u.s.-census-bureaus-american-community-survey-acs-for-2022-and-2023.-it-tracks-county-level-population-and-the-share-of-households-without-complete-plumbing-letting-us-see-how-access-to-basic-facilities-has-changed-over-time.">This data set came from the U.S. Census Bureau’s American Community Survey (ACS) for 2022 and 2023. It tracks county-level population and the share of households without complete plumbing, letting us see how access to basic facilities has changed over time.</h2>
+<p>This analysis uses county-level data from the <strong>U.S. Census Bureau’s American Community Survey (ACS) 1-year estimates</strong> for 2022 and 2023. I focus on two variables 1) <strong>Total population</strong> in each county (Table B01003) and 2) <strong>Number of households lacking complete plumbing</strong> (Table B25049)</p>
+<p>Using these, I calculate the <strong>percentage of households without complete indoor plumbing</strong> and then compare 2022 to 2023 across all U.S. counties included in the ACS 1-year sample. The goal is to understand whether counties with higher plumbing insecurity in 2022 tended to see improvement, worsening, or stability in 2023.</p>
+<p>This data set came from the U.S. Census Bureau’s American Community Survey (ACS) for 2022 and 2023. It tracks county-level population and the share of households without complete plumbing, letting us see how access to basic facilities has changed over time.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean data compiled from code referenced in article (https://waterdata.usgs.gov/blog/acs-maps/). </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Code was revised to pull data for all US counties for years 2022 - 2023.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages -----</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper functions -----</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>get_census_data <span class="ot">&lt;-</span> <span class="cf">function</span>(geography, var_names, year, proj, survey_var) {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">geography =</span> geography,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable =</span> var_names,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> year,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">geometry =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">survey =</span> survey_var) <span class="sc">|&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> year)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df) </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab relevant variables - B01003_001: total population, B25049_004: households lacking plumbing----</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"B01003_001"</span>, <span class="st">"B25049_004"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull data for 2023 and 2022 for all US counties ------</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>water_insecurity_2023 <span class="ot">&lt;-</span> <span class="fu">get_census_data</span>(</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">geography =</span> <span class="st">'county'</span>, </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_names =</span> vars, </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="st">"2023"</span>, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">proj =</span> <span class="st">"EPSG:5070"</span>, </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">survey_var =</span> <span class="st">"acs1"</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_long =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">"B01003_001"</span> <span class="sc">~</span> <span class="st">"total_pop"</span>,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">"B25049_004"</span> <span class="sc">~</span> <span class="st">"plumbing"</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA_character_</span>  </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geoid, name, variable_long, estimate, year) <span class="sc">|&gt;</span> </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> variable_long,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> estimate</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent_lacking_plumbing =</span> (plumbing <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>water_insecurity_2022 <span class="ot">&lt;-</span> <span class="fu">get_census_data</span>(</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">geography =</span> <span class="st">'county'</span>, </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_names =</span> vars, </span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="st">"2022"</span>, </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">proj =</span> <span class="st">"EPSG:5070"</span>, </span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">survey_var =</span> <span class="st">"acs1"</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_long =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">"B01003_001"</span> <span class="sc">~</span> <span class="st">"total_pop"</span>,</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">"B25049_004"</span> <span class="sc">~</span> <span class="st">"plumbing"</span>,</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA_character_</span>  </span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geoid, name, variable_long, estimate, year) <span class="sc">|&gt;</span> </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> variable_long,</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> estimate</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent_lacking_plumbing =</span> (plumbing <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine 2022 and 2023 data into one comparison data frame</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>wi23 <span class="ot">&lt;-</span> water_insecurity_2023 <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geoid, name, percent_lacking_plumbing) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">p23 =</span> percent_lacking_plumbing)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>wi22 <span class="ot">&lt;-</span> water_insecurity_2022 <span class="sc">|&gt;</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geoid, name, percent_lacking_plumbing) <span class="sc">|&gt;</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">p22 =</span> percent_lacking_plumbing)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Inner join keeps only counties that appear in both years</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(wi23, wi22, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"geoid"</span>, <span class="st">"name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>This a quick exploratory summary of each year.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives you a sense of the distribution in each year.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(p22, p23) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      p22               p23         
+ Min.   :0.00000   Min.   :0.00000  
+ 1st Qu.:0.02091   1st Qu.:0.02228  
+ Median :0.05467   Median :0.06044  
+ Mean   :0.09782   Mean   :0.10166  
+ 3rd Qu.:0.10753   3rd Qu.:0.11712  
+ Max.   :3.72906   Max.   :3.91322  
+ NA's   :2         NA's   :1        </code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(comp, <span class="fu">aes</span>(<span class="at">x =</span> p22, <span class="at">y =</span> p23)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span>              <span class="co"># scatter points</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>           <span class="co"># simple trend line</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">accuracy =</span> <span class="fl">0.01</span>)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">accuracy =</span> <span class="fl">0.01</span>)) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"U.S. Counties: Percent Lacking Complete Indoor Plumbing"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Comparing 2023 vs. 2022 ACS 1-year Estimates"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"2022 % lacking plumbing"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"2023 % lacking plumbing"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: U.S. Census Bureau, ACS 1-year Estimates (tidycensus)"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tidydata1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="tidydata1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="A County-level scatterplot comparison of the percentage of households lacking complete indoor plumbing, 2022 vs. 2023." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>In this visualization, each point represents an overlapping county included in both 2022 and 2023 versions of American Community Survey with a ≥65k population. If plumbing access remained the same all points would fall along the diagonal trend line. The scatter shows that while many counties cluster close to that line, some saw higher shares of households lacking complete plumbing in 2023 (points above the line), and others saw improvements (points below).</p>
-<p><a href="https://github.com/rfordatascience/tidytuesday/tree/main/data/2025/2025-01-28">Tidy Tuesday Data</a></p>
-<p>Census Data: U.S. Census Bureau. <em>American Community Survey (ACS) 1-year estimates, Tables B01003 &amp; B25049 (2022–2023).</em></p>
+<p>References:</p>
+<p><strong>TidyTuesday Source:</strong> R4DS Online Learning Community. (2025). <em>TidyTuesday: ACS Plumbing and Population Data (2025-01-28).</em> TidyTuesday project. Retrieved from <a href="https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-01-28/readme.md" class="uri">https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-01-28/readme.md</a></p>
+<p><strong>Original Data Source:</strong> U.S. Census Bureau. (2022–2023). <em>American Community Survey (ACS) 1-year Estimates, Tables B01003 (Total Population) and B25049 (Plumbing Facilities).</em> Washington, DC: U.S. Department of Commerce. Retrieved from <a href="https://www.census.gov/programs-surveys/acs/data.html" class="uri">https://www.census.gov/programs-surveys/acs/data.html</a></p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

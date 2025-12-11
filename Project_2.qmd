@@ -11,22 +11,30 @@ execute:
   message: false
 ---
 
-This page looks at the TidyTuesday Netflix Titles dataset from 2021-04-20, which includes metadata and short descriptions for movies and TV shows. In my plots, I compare movie runtimes by decade and title lengths across shows in the data set.
+This project looks at the TidyTuesday Netflix Titles dataset from 2021-04-20, which includes metadata and short descriptions for movies and TV shows. In my plots, I compare movie runtimes by decade and title lengths across shows in the data set.
+
+My analysis focuses on three small exploratory tasks:
+
+1.  **Comparing movie runtimes across decades**
+
+2.  **Examining the distribution of title lengths**
+
+3.  **Exploring the number of seasons in Netflix TV shows**
 
 ##### 
 
+The cleaned data set contains the type (movie or tv show), it's title, the date it was added to the platform, when it originally released, its duration in seasons or minutes, and a description of the plot.
+
 ```{r}
-
-
 library(tidyverse)
 library(stringr)
-
 
 
 netflix <- readr::read_csv(
   "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv",
 )
 
+# Removing irrelevant columns & creating a decade variable
 clean_data <- netflix |>
   select(type, title, date_added, release_year, duration, description) |>
   mutate(
@@ -34,16 +42,27 @@ clean_data <- netflix |>
     description = str_squish(description),
     decade      = (release_year %/% 10) * 10
   )
+head(clean_data)
+```
 
+The duration column in the original dataset is stored as text, with movies coded like "95 min" and TV shows coded like "3 seasons" . To analyze runtimes and season counts numerically, I use regular expressions to pull out just the digits at the beginning of these strings. For movies, I look for a number followed by "min" and convert it to a minutes variable. For TV shows, I look for a number followed by "Season" or "Seasons" or and convert it to a seasons variable. This lets me treat runtimes and season counts as numbers.
+
+```{r}
+
+# Regex parses runtimes
 parsed_data <- clean_data |>
   mutate(
+     # Movies store duration in minutes
     minutes = as.integer(str_extract(duration, "(?<=^)\\d+(?=\\s*min$)")),
-    seasons = as.integer(str_extract(duration, "(?<=^)\\d+(?=\\s*Season(?:s)?$)"))
-  )
 
+    # TV Shows store seasons
+    seasons = as.integer(str_extract(duration, "(?<=^)\\d+(?=\\s*Season(?:s)?$)")) 
+  )
 ```
 
 ```{r}
+
+#| fig-alt: "Density curves comparing the distribution of movie runtimes across release decades, showing differences in typical runtime length over time."
 
 
 parsed_data |>
@@ -63,14 +82,13 @@ parsed_data |>
 Each curve on this plot shows the distribution of Netflix movie runtimes for each decade represented since the 40s. The higher peaks show the most common lengths for that decade. What we see in this plot are the changes across time for what a typical runtime looks like in each era, with the peaks showing what the most frequent lengths were for a given decade.
 
 ```{r}
-
-
+#| fig-alt: "Bar chart showing how many Netflix titles contain 1, 2, 3, or more words, illustrating that short titles are most common."
 
 parsed_data |>
   transmute(
     title_words = title |>
       str_squish() |>
-      str_count("\\S+")         
+      str_count("\\S+")  # count non-space sequences         
   ) |>
   filter(!is.na(title_words)) |>
   ggplot(aes(x = title_words)) +
@@ -86,12 +104,10 @@ parsed_data |>
 Each bar on this plot shows how many Netflix titles have a given number of words in their names. Taller bars mark the most common title lengths. What we see is that short, punchy names (around 1–3 words) are most frequent, with a tapering tail of longer titles that tend to appear less often.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
-
+#| fig-alt: "Bar chart showing how many Netflix titles contain 1, 2, 3, or more words, illustrating that short titles are most common."
 
 parsed_data |>
-  filter(type == "TV Show", !is.na(seasons), seasons <= 11) |>
+  filter(type == "TV Show", !is.na(seasons), seasons <= 11) |> # limit outliers
   count(seasons, sort = FALSE) |>
   mutate(seasons = factor(seasons, levels = sort(unique(seasons)))) |>
   ggplot(aes(x = seasons, y = n)) +

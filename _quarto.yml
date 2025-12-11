@@ -6,27 +6,26 @@ website:
   title: "Christopher Hussey"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - href: about.qmd
-        text: About
-      - href: tidydata1.qmd
-        text: VIS 1
-      - href: tidydata2.qmd
-        text: VIS 2
-      - href: Project_2.qmd
-        text: Project 2
-      - href: Project_3.qmd
-        text: Project 3
-      - href: Project_4.qmd
-        text: Project 4
-      - href: Project_5.qmd
-        text: Project 5
-      - href: final_pres.qmd
-        text: Final Presentation
-      
-       
-
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.html
+      - text: "Data Viz"
+        menu: 
+        - text: Household Plumbing Access
+          href: tidydata1.html
+        - text: FIDE Ratings by Federation
+          href: tidydata2.html
+        - text: Netflix Show Patterns
+          href: Project_2.html
+        - text: Variance in European Recognition Rates of Syrian Refugees
+          href: Project_3.html
+        - text: Project 4
+          href: Project_4.html
+        - text: Project 5
+          href: Project_5.html
+        - text: Final Presentation
+          href: final_pres.html
 format:
   html:
     theme:
